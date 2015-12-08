@@ -1,0 +1,1356 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/5/2015 10:03:33 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-BFJ1BGV"
+  DTS:CreatorName="DESKTOP-BFJ1BGV\Kevin Feasel"
+  DTS:DTSID="{BD0DD5D8-875D-4E30-8DC8-026EB9E6AD6A}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.4100.1"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="IdealPackage"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{CF8BB2B5-04A1-45C3-BC51-2C8D45691110}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[NewWarehouseNode]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D5A07D20-2956-46EE-8842-6603D22CFE90}"
+      DTS:ObjectName="NewWarehouseNode">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[User::NewWarehouseDatabase]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::NewWarehouseServer]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=AdventureWorksDW2014Dest;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[OldWarehouseNode]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{69C9F3B6-B88E-4EA4-B737-E216629B92B3}"
+      DTS:ObjectName="OldWarehouseNode">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[User::OldWarehouseDatabase]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::OldWarehouseServer]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=AdventureWorksDW2014;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{57BA9C49-9885-4904-BDEB-42FE1A344E59}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="CustomerID">
+      <DTS:VariableValue
+        DTS:DataType="3">12195</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{059D6D39-D825-482B-9777-E7AC39F0BEED}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewWarehouseDatabase">
+      <DTS:VariableValue
+        DTS:DataType="8">AdventureWorksDW2014Dest</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9882D08C-2430-40D1-A9DA-1C282C4A20BC}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewWarehouseServer">
+      <DTS:VariableValue
+        DTS:DataType="8">.</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B18BB6D1-D3B4-4B41-B86F-84DD6B6E5A32}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="OldWarehouseDatabase">
+      <DTS:VariableValue
+        DTS:DataType="8">AdventureWorksDW2014</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E261B7D6-FCEB-488C-9FBE-E9FCC85F78EB}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="OldWarehouseServer">
+      <DTS:VariableValue
+        DTS:DataType="8">.</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D13D77B5-E2F3-4157-88B3-C693D8033883}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PerformDeletion">
+      <DTS:VariableValue
+        DTS:DataType="11">-1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0070BBEA-BD5C-41DD-8AC6-CD18A6218B15}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PerformMigration">
+      <DTS:VariableValue
+        DTS:DataType="11">-1</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete From New Tables"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{1EBD3308-33A4-4781-ADF0-C1A1FA6ED56F}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete From New Tables">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Delete From New Tables\Prepare Tables"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{C7FED61F-4654-4C68-A37B-6C58B7541A49}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Prepare Tables"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{D5A07D20-2956-46EE-8842-6603D22CFE90}"
+              SQLTask:SqlStatementSource="DELETE FROM dbo.DIMCustomer;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Migrate To New Tables"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{8B6434AA-2C01-40DD-B6C9-7321B8F795EB}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Migrate To New Tables">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Migrate To New Tables\Migrate Tables"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{5485A397-17FC-47F6-99BB-09D27C3F7224}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Migrate Tables"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              defaultBufferSize="104857600"
+              version="1">
+              <components>
+                <component
+                  refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Customer Dest"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[DimCustomer]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">true</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS,ROWS_PER_BATCH = 10000</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">200000</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[NewWarehouseNode]"
+                      connectionManagerRefId="Package.ConnectionManagers[NewWarehouseNode]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[CustomerKey]"
+                          cachedDataType="i4"
+                          cachedName="CustomerKey"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[CustomerKey]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[GeographyKey]"
+                          cachedDataType="i4"
+                          cachedName="GeographyKey"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[GeographyKey]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[GeographyKey]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[CustomerAlternateKey]"
+                          cachedDataType="wstr"
+                          cachedLength="15"
+                          cachedName="CustomerAlternateKey"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[CustomerAlternateKey]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[CustomerAlternateKey]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[Title]"
+                          cachedDataType="wstr"
+                          cachedLength="8"
+                          cachedName="Title"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[Title]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[Title]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[FirstName]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="FirstName"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[FirstName]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[MiddleName]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="MiddleName"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[MiddleName]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[MiddleName]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[LastName]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="LastName"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[LastName]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[NameStyle]"
+                          cachedDataType="bool"
+                          cachedName="NameStyle"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[NameStyle]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[NameStyle]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[BirthDate]"
+                          cachedDataType="dbDate"
+                          cachedName="BirthDate"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[BirthDate]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[BirthDate]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[MaritalStatus]"
+                          cachedDataType="wstr"
+                          cachedLength="1"
+                          cachedName="MaritalStatus"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[MaritalStatus]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[MaritalStatus]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[Suffix]"
+                          cachedDataType="wstr"
+                          cachedLength="10"
+                          cachedName="Suffix"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[Suffix]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[Suffix]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[Gender]"
+                          cachedDataType="wstr"
+                          cachedLength="1"
+                          cachedName="Gender"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[Gender]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[Gender]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[EmailAddress]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="EmailAddress"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[EmailAddress]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[EmailAddress]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[YearlyIncome]"
+                          cachedDataType="cy"
+                          cachedName="YearlyIncome"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[YearlyIncome]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[YearlyIncome]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[TotalChildren]"
+                          cachedDataType="ui1"
+                          cachedName="TotalChildren"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[TotalChildren]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[TotalChildren]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[NumberChildrenAtHome]"
+                          cachedDataType="ui1"
+                          cachedName="NumberChildrenAtHome"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[NumberChildrenAtHome]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[NumberChildrenAtHome]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[EnglishEducation]"
+                          cachedDataType="wstr"
+                          cachedLength="40"
+                          cachedName="EnglishEducation"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[EnglishEducation]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[EnglishEducation]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[SpanishEducation]"
+                          cachedDataType="wstr"
+                          cachedLength="40"
+                          cachedName="SpanishEducation"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[SpanishEducation]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[SpanishEducation]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[FrenchEducation]"
+                          cachedDataType="wstr"
+                          cachedLength="40"
+                          cachedName="FrenchEducation"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[FrenchEducation]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[FrenchEducation]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[EnglishOccupation]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="EnglishOccupation"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[EnglishOccupation]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[EnglishOccupation]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[SpanishOccupation]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="SpanishOccupation"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[SpanishOccupation]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[SpanishOccupation]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[FrenchOccupation]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="FrenchOccupation"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[FrenchOccupation]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[FrenchOccupation]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[HouseOwnerFlag]"
+                          cachedDataType="wstr"
+                          cachedLength="1"
+                          cachedName="HouseOwnerFlag"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[HouseOwnerFlag]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[HouseOwnerFlag]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[NumberCarsOwned]"
+                          cachedDataType="ui1"
+                          cachedName="NumberCarsOwned"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[NumberCarsOwned]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[NumberCarsOwned]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[AddressLine1]"
+                          cachedDataType="wstr"
+                          cachedLength="120"
+                          cachedName="AddressLine1"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[AddressLine1]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[AddressLine1]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[AddressLine2]"
+                          cachedDataType="wstr"
+                          cachedLength="120"
+                          cachedName="AddressLine2"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[AddressLine2]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[AddressLine2]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[Phone]"
+                          cachedDataType="wstr"
+                          cachedLength="20"
+                          cachedName="Phone"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[Phone]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[Phone]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[DateFirstPurchase]"
+                          cachedDataType="dbDate"
+                          cachedName="DateFirstPurchase"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[DateFirstPurchase]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[DateFirstPurchase]" />
+                        <inputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].Columns[CommuteDistance]"
+                          cachedDataType="wstr"
+                          cachedLength="15"
+                          cachedName="CommuteDistance"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[CommuteDistance]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[CommuteDistance]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                          dataType="i4"
+                          name="CustomerKey" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[GeographyKey]"
+                          dataType="i4"
+                          name="GeographyKey" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[CustomerAlternateKey]"
+                          dataType="wstr"
+                          length="15"
+                          name="CustomerAlternateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[Title]"
+                          dataType="wstr"
+                          length="8"
+                          name="Title" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                          dataType="wstr"
+                          length="50"
+                          name="FirstName" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[MiddleName]"
+                          dataType="wstr"
+                          length="50"
+                          name="MiddleName" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                          dataType="wstr"
+                          length="50"
+                          name="LastName" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[NameStyle]"
+                          dataType="bool"
+                          name="NameStyle" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[BirthDate]"
+                          dataType="dbDate"
+                          name="BirthDate" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[MaritalStatus]"
+                          dataType="wstr"
+                          length="1"
+                          name="MaritalStatus" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[Suffix]"
+                          dataType="wstr"
+                          length="10"
+                          name="Suffix" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[Gender]"
+                          dataType="wstr"
+                          length="1"
+                          name="Gender" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[EmailAddress]"
+                          dataType="wstr"
+                          length="50"
+                          name="EmailAddress" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[YearlyIncome]"
+                          dataType="cy"
+                          name="YearlyIncome" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[TotalChildren]"
+                          dataType="ui1"
+                          name="TotalChildren" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[NumberChildrenAtHome]"
+                          dataType="ui1"
+                          name="NumberChildrenAtHome" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[EnglishEducation]"
+                          dataType="wstr"
+                          length="40"
+                          name="EnglishEducation" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[SpanishEducation]"
+                          dataType="wstr"
+                          length="40"
+                          name="SpanishEducation" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[FrenchEducation]"
+                          dataType="wstr"
+                          length="40"
+                          name="FrenchEducation" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[EnglishOccupation]"
+                          dataType="wstr"
+                          length="100"
+                          name="EnglishOccupation" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[SpanishOccupation]"
+                          dataType="wstr"
+                          length="100"
+                          name="SpanishOccupation" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[FrenchOccupation]"
+                          dataType="wstr"
+                          length="100"
+                          name="FrenchOccupation" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[HouseOwnerFlag]"
+                          dataType="wstr"
+                          length="1"
+                          name="HouseOwnerFlag" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[NumberCarsOwned]"
+                          dataType="ui1"
+                          name="NumberCarsOwned" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[AddressLine1]"
+                          dataType="wstr"
+                          length="120"
+                          name="AddressLine1" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[AddressLine2]"
+                          dataType="wstr"
+                          length="120"
+                          name="AddressLine2" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[Phone]"
+                          dataType="wstr"
+                          length="20"
+                          name="Phone" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[DateFirstPurchase]"
+                          dataType="dbDate"
+                          name="DateFirstPurchase" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input].ExternalColumns[CommuteDistance]"
+                          dataType="wstr"
+                          length="15"
+                          name="CommuteDistance" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Migrate To New Tables\Migrate Tables\Customer Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="Customer Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[DimCustomer]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT * FROM dbo.DimCustomer WHERE CustomerKey = ?</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping">"Parameter0:Input",{57BA9C49-9885-4904-BDEB-42FE1A344E59};</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[OldWarehouseNode]"
+                      connectionManagerRefId="Package.ConnectionManagers[OldWarehouseNode]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[CustomerKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerKey]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[CustomerKey]"
+                          name="CustomerKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[GeographyKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[GeographyKey]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[GeographyKey]"
+                          name="GeographyKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[CustomerAlternateKey]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerAlternateKey]"
+                          length="15"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[CustomerAlternateKey]"
+                          name="CustomerAlternateKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[Title]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[Title]"
+                          length="8"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[Title]"
+                          name="Title"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[FirstName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                          length="50"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[FirstName]"
+                          name="FirstName"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[MiddleName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[MiddleName]"
+                          length="50"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[MiddleName]"
+                          name="MiddleName"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[LastName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
+                          length="50"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[LastName]"
+                          name="LastName"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[NameStyle]"
+                          dataType="bool"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[NameStyle]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[NameStyle]"
+                          name="NameStyle"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[BirthDate]"
+                          dataType="dbDate"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[BirthDate]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[BirthDate]"
+                          name="BirthDate"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[MaritalStatus]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[MaritalStatus]"
+                          length="1"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[MaritalStatus]"
+                          name="MaritalStatus"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[Suffix]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[Suffix]"
+                          length="10"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[Suffix]"
+                          name="Suffix"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[Gender]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[Gender]"
+                          length="1"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[Gender]"
+                          name="Gender"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[EmailAddress]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[EmailAddress]"
+                          length="50"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[EmailAddress]"
+                          name="EmailAddress"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[YearlyIncome]"
+                          dataType="cy"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[YearlyIncome]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[YearlyIncome]"
+                          name="YearlyIncome"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[TotalChildren]"
+                          dataType="ui1"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[TotalChildren]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[TotalChildren]"
+                          name="TotalChildren"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[NumberChildrenAtHome]"
+                          dataType="ui1"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[NumberChildrenAtHome]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[NumberChildrenAtHome]"
+                          name="NumberChildrenAtHome"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[EnglishEducation]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[EnglishEducation]"
+                          length="40"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[EnglishEducation]"
+                          name="EnglishEducation"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[SpanishEducation]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[SpanishEducation]"
+                          length="40"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[SpanishEducation]"
+                          name="SpanishEducation"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[FrenchEducation]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[FrenchEducation]"
+                          length="40"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[FrenchEducation]"
+                          name="FrenchEducation"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[EnglishOccupation]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[EnglishOccupation]"
+                          length="100"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[EnglishOccupation]"
+                          name="EnglishOccupation"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[SpanishOccupation]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[SpanishOccupation]"
+                          length="100"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[SpanishOccupation]"
+                          name="SpanishOccupation"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[FrenchOccupation]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[FrenchOccupation]"
+                          length="100"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[FrenchOccupation]"
+                          name="FrenchOccupation"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[HouseOwnerFlag]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[HouseOwnerFlag]"
+                          length="1"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[HouseOwnerFlag]"
+                          name="HouseOwnerFlag"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[NumberCarsOwned]"
+                          dataType="ui1"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[NumberCarsOwned]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[NumberCarsOwned]"
+                          name="NumberCarsOwned"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[AddressLine1]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[AddressLine1]"
+                          length="120"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[AddressLine1]"
+                          name="AddressLine1"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[AddressLine2]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[AddressLine2]"
+                          length="120"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[AddressLine2]"
+                          name="AddressLine2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[Phone]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[Phone]"
+                          length="20"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[Phone]"
+                          name="Phone"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[DateFirstPurchase]"
+                          dataType="dbDate"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[DateFirstPurchase]"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[DateFirstPurchase]"
+                          name="DateFirstPurchase"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[CommuteDistance]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[CommuteDistance]"
+                          length="15"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].Columns[CommuteDistance]"
+                          name="CommuteDistance"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerKey]"
+                          dataType="i4"
+                          name="CustomerKey" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[GeographyKey]"
+                          dataType="i4"
+                          name="GeographyKey" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerAlternateKey]"
+                          dataType="wstr"
+                          length="15"
+                          name="CustomerAlternateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[Title]"
+                          dataType="wstr"
+                          length="8"
+                          name="Title" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                          dataType="wstr"
+                          length="50"
+                          name="FirstName" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[MiddleName]"
+                          dataType="wstr"
+                          length="50"
+                          name="MiddleName" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
+                          dataType="wstr"
+                          length="50"
+                          name="LastName" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[NameStyle]"
+                          dataType="bool"
+                          name="NameStyle" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[BirthDate]"
+                          dataType="dbDate"
+                          name="BirthDate" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[MaritalStatus]"
+                          dataType="wstr"
+                          length="1"
+                          name="MaritalStatus" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[Suffix]"
+                          dataType="wstr"
+                          length="10"
+                          name="Suffix" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[Gender]"
+                          dataType="wstr"
+                          length="1"
+                          name="Gender" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[EmailAddress]"
+                          dataType="wstr"
+                          length="50"
+                          name="EmailAddress" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[YearlyIncome]"
+                          dataType="cy"
+                          name="YearlyIncome" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[TotalChildren]"
+                          dataType="ui1"
+                          name="TotalChildren" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[NumberChildrenAtHome]"
+                          dataType="ui1"
+                          name="NumberChildrenAtHome" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[EnglishEducation]"
+                          dataType="wstr"
+                          length="40"
+                          name="EnglishEducation" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[SpanishEducation]"
+                          dataType="wstr"
+                          length="40"
+                          name="SpanishEducation" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[FrenchEducation]"
+                          dataType="wstr"
+                          length="40"
+                          name="FrenchEducation" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[EnglishOccupation]"
+                          dataType="wstr"
+                          length="100"
+                          name="EnglishOccupation" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[SpanishOccupation]"
+                          dataType="wstr"
+                          length="100"
+                          name="SpanishOccupation" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[FrenchOccupation]"
+                          dataType="wstr"
+                          length="100"
+                          name="FrenchOccupation" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[HouseOwnerFlag]"
+                          dataType="wstr"
+                          length="1"
+                          name="HouseOwnerFlag" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[NumberCarsOwned]"
+                          dataType="ui1"
+                          name="NumberCarsOwned" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[AddressLine1]"
+                          dataType="wstr"
+                          length="120"
+                          name="AddressLine1" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[AddressLine2]"
+                          dataType="wstr"
+                          length="120"
+                          name="AddressLine2" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[Phone]"
+                          dataType="wstr"
+                          length="20"
+                          name="Phone" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[DateFirstPurchase]"
+                          dataType="dbDate"
+                          name="DateFirstPurchase" />
+                        <externalMetadataColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output].ExternalColumns[CommuteDistance]"
+                          dataType="wstr"
+                          length="15"
+                          name="CommuteDistance" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[CustomerKey]"
+                          dataType="i4"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[CustomerKey]"
+                          name="CustomerKey" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[GeographyKey]"
+                          dataType="i4"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[GeographyKey]"
+                          name="GeographyKey" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[CustomerAlternateKey]"
+                          dataType="wstr"
+                          length="15"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[CustomerAlternateKey]"
+                          name="CustomerAlternateKey" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[Title]"
+                          dataType="wstr"
+                          length="8"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[Title]"
+                          name="Title" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                          name="FirstName" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[MiddleName]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[MiddleName]"
+                          name="MiddleName" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                          name="LastName" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[NameStyle]"
+                          dataType="bool"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[NameStyle]"
+                          name="NameStyle" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[BirthDate]"
+                          dataType="dbDate"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[BirthDate]"
+                          name="BirthDate" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[MaritalStatus]"
+                          dataType="wstr"
+                          length="1"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[MaritalStatus]"
+                          name="MaritalStatus" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[Suffix]"
+                          dataType="wstr"
+                          length="10"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[Suffix]"
+                          name="Suffix" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[Gender]"
+                          dataType="wstr"
+                          length="1"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[Gender]"
+                          name="Gender" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[EmailAddress]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[EmailAddress]"
+                          name="EmailAddress" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[YearlyIncome]"
+                          dataType="cy"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[YearlyIncome]"
+                          name="YearlyIncome" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[TotalChildren]"
+                          dataType="ui1"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[TotalChildren]"
+                          name="TotalChildren" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[NumberChildrenAtHome]"
+                          dataType="ui1"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[NumberChildrenAtHome]"
+                          name="NumberChildrenAtHome" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[EnglishEducation]"
+                          dataType="wstr"
+                          length="40"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[EnglishEducation]"
+                          name="EnglishEducation" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[SpanishEducation]"
+                          dataType="wstr"
+                          length="40"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[SpanishEducation]"
+                          name="SpanishEducation" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[FrenchEducation]"
+                          dataType="wstr"
+                          length="40"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[FrenchEducation]"
+                          name="FrenchEducation" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[EnglishOccupation]"
+                          dataType="wstr"
+                          length="100"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[EnglishOccupation]"
+                          name="EnglishOccupation" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[SpanishOccupation]"
+                          dataType="wstr"
+                          length="100"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[SpanishOccupation]"
+                          name="SpanishOccupation" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[FrenchOccupation]"
+                          dataType="wstr"
+                          length="100"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[FrenchOccupation]"
+                          name="FrenchOccupation" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[HouseOwnerFlag]"
+                          dataType="wstr"
+                          length="1"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[HouseOwnerFlag]"
+                          name="HouseOwnerFlag" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[NumberCarsOwned]"
+                          dataType="ui1"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[NumberCarsOwned]"
+                          name="NumberCarsOwned" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[AddressLine1]"
+                          dataType="wstr"
+                          length="120"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[AddressLine1]"
+                          name="AddressLine1" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[AddressLine2]"
+                          dataType="wstr"
+                          length="120"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[AddressLine2]"
+                          name="AddressLine2" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[Phone]"
+                          dataType="wstr"
+                          length="20"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[Phone]"
+                          name="Phone" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[DateFirstPurchase]"
+                          dataType="dbDate"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[DateFirstPurchase]"
+                          name="DateFirstPurchase" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[CommuteDistance]"
+                          dataType="wstr"
+                          length="15"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[CommuteDistance]"
+                          name="CommuteDistance" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Migrate To New Tables\Migrate Tables.Paths[OLE DB Source Output]"
+                  endId="Package\Migrate To New Tables\Migrate Tables\Customer Dest.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Migrate To New Tables\Migrate Tables\Customer Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{B7F7D315-D5BB-499D-9FEE-434E2EBC01A1}"
+      DTS:From="Package\Delete From New Tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Migrate To New Tables" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="149,42"
+          Id="Package\Delete From New Tables\Prepare Tables"
+          TopLeft="5.5,5.5" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="160,102.5"
+          Size="160,145.5"
+          Id="Package\Delete From New Tables"
+          TopLeft="5.50000000000001,5.5" />
+        <NodeLayout
+          Size="148,42"
+          Id="Package\Migrate To New Tables\Migrate Tables"
+          TopLeft="5.5,5.5" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="159,102.5"
+          Size="159,145.5"
+          Id="Package\Migrate To New Tables"
+          TopLeft="6.00000000000004,211" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="85.5,151">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,38 @@
+<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+    <Projects>
+        <PackageProject Name="BIMLMigration" ProtectionLevel="DontSaveSensitive">
+            <Parameters>
+                <Parameter Name="CustomerID" DataType="Int32">12195</Parameter>
+                <Parameter Name="OldWarehouseServer" DataType="String">.</Parameter>
+                <Parameter Name="OldWarehouseDatabase" DataType="String">AdventureWorksDW2014</Parameter>
+                <Parameter Name="NewWarehouseServer" DataType="String">.</Parameter>
+                <Parameter Name="NewWarehouseDatabase" DataType="String">AdventureWorksDW2014Dest</Parameter>
+                <Parameter Name="PerformMigration" DataType="Boolean">True</Parameter>
+                <Parameter Name="PerformDeletion" DataType="Boolean">True</Parameter>
+            </Parameters>
+            <Packages>
+                <Package PackageName="2_AddParameters" />
+            </Packages>
+        </PackageProject>
+    </Projects>
+    <Connections>
+        <Connection Name="OldWarehouseNode" ConnectionString="Data Source=LOCALHOST;Initial Catalog=AdventureWorksDW2014;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+        <Connection Name="NewWarehouseNode" ConnectionString="Data Source=LOCALHOST;Initial Catalog=AdventureWorksDW2014Dest;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+    </Connections>
+    <Packages>
+        <Package Name="2_AddParameters" ConstraintMode="Linear" ProtectionLevel="DontSaveSensitive">
+            <Connections>
+                <Connection ConnectionName="OldWarehouseNode">
+                </Connection>
+                <Connection ConnectionName="NewWarehouseNode">
+                </Connection>
+            </Connections>
+            <Tasks>
+                <Container Name="Delete From New Tables" ConstraintMode="Linear">
+                </Container>
+                <Container Name="Migrate To New Table" ConstraintMode="Linear">
+                </Container>
+            </Tasks>
+        </Package>
+    </Packages>
+</Biml>
