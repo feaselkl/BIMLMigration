@@ -1,15 +1,10 @@
-<#@ template language="C#" hostspecific="true" #>
-<#@ import namespace="System.Data" #>
-
 <Biml xmlns="http://schemas.varigence.com/biml.xsd">
 	<#
     string metadataConnectionString ="Provider=SQLNCLI11;Server=LOCALHOST;Initial Catalog=AdventureWorksDW2014;Integrated Security=SSPI;";
 	DataTable tables = ExternalDataAccess.GetDataTable(metadataConnectionString,
 	"SELECT SchemaName, TableName, Section, JoinCriteria, SelectCriteria, WhereCriteria, NeedToDelete, LookupColumns, LookupColumnXML, CASE WHEN WhereCriteria = '1 = 1' THEN '1 = 1 \"' ELSE REPLACE(WhereCriteria, '?', '\" + (DT_WSTR, 12)@[$Project::CustomerID]') END AS ExpressionWhereCriteria FROM dbo.MigrationStep ORDER BY Section, SchemaName, TableName");
 	DataTable sections = ExternalDataAccess.GetDataTable(metadataConnectionString,
-	"SELECT DISTINCT Section FROM dbo.MigrationStep ORDER BY Section");
-	DataTable sectionsDesc = ExternalDataAccess.GetDataTable(metadataConnectionString,
-	"SELECT DISTINCT Section FROM dbo.MigrationStep ORDER BY Section DESC"); #>
+	"SELECT DISTINCT Section FROM dbo.MigrationStep ORDER BY Section"); #>
 	<Projects>
 		<PackageProject Name="BIMLMigration" ProtectionLevel="DontSaveSensitive">
 			<Parameters>
@@ -35,7 +30,7 @@
 			<Connections>
 				<Connection ConnectionName="OldWarehouseNode">
 					<Expressions>
-						<Expression ExternalProperty="InitalCatalog">@[$Project::OldWarehouseDatabase]</Expression>
+						<Expression ExternalProperty="InitialCatalog">@[$Project::OldWarehouseDatabase]</Expression>
 						<Expression ExternalProperty="ServerName">@[$Project::OldWarehouseServer]</Expression>
 					</Expressions>
 				</Connection>
@@ -107,3 +102,6 @@
 		</Package>
 	</Packages>
 </Biml>
+
+<#@ template language="C#" hostspecific="true" #>
+<#@ import namespace="System.Data" #>

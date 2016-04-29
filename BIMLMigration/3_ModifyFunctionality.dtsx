@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DTS:Executable DTS:CreationDate="04/09/2016 16:07:59" DTS:CreationName="Microsoft.Package" DTS:CreatorComputerName="DESKTOP-BFJ1BGV" DTS:CreatorName="Kevin Feasel" DTS:DTSID="{D9B98B55-D7BD-4039-915C-B0C542A62C5F}" DTS:ExecutableType="Microsoft.Package" DTS:LastModifiedProductVersion="" DTS:LocaleID="1033" DTS:ObjectName="3_ModifyFunctionality" DTS:ProtectionLevel="0" DTS:refId="Package" DTS:VersionBuild="0" DTS:VersionGUID="{52239019-2C31-4FEA-A92D-4722CCA6F54D}" DTS:VersionMajor="0" xmlns:DTS="www.microsoft.com/SqlServer/Dts">
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager DTS:CreationName="OLEDB" DTS:DTSID="{C0A3F142-607D-4E2C-80FD-4F4211A1415E}" DTS:ObjectName="OldWarehouseNode" DTS:refId="Package.ConnectionManagers[OldWarehouseNode]">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager DTS:ConnectionString="Data Source=LOCALHOST;Initial Catalog=AdventureWorksDW2014;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+      <DTS:PropertyExpression DTS:Name="InitalCatalog">@[$Project::OldWarehouseDatabase]</DTS:PropertyExpression>
+      <DTS:PropertyExpression DTS:Name="ServerName">@[$Project::OldWarehouseServer]</DTS:PropertyExpression>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager DTS:CreationName="OLEDB" DTS:DTSID="{553AF438-15D0-4FB1-AAC2-CB18EF1A66E8}" DTS:ObjectName="NewWarehouseNode" DTS:refId="Package.ConnectionManagers[NewWarehouseNode]">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager DTS:ConnectionString="Data Source=LOCALHOST;Initial Catalog=AdventureWorksDW2014Dest;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;">
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+      <DTS:PropertyExpression DTS:Name="InitialCatalog">@[$Project::NewWarehouseDatabase]</DTS:PropertyExpression>
+      <DTS:PropertyExpression DTS:Name="ServerName">@[$Project::NewWarehouseServer]</DTS:PropertyExpression>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Executables>
+    <DTS:Executable DTS:CreationName="STOCK:SEQUENCE" DTS:DTSID="{1D15577A-C2E5-404D-8753-EBC76CE86D7E}" DTS:ExecutableType="STOCK:SEQUENCE" DTS:LocaleID="-1" DTS:ObjectName="Delete From New Tables" DTS:refId="Package\Delete From New Tables">
+      <DTS:PropertyExpression DTS:Name="Disable">!(@[$Project::PerformDeletion])</DTS:PropertyExpression>
+    </DTS:Executable>
+    <DTS:Executable DTS:CreationName="STOCK:SEQUENCE" DTS:DTSID="{99A23C80-5C7E-4F9E-8BE9-C7F644E83045}" DTS:ExecutableType="STOCK:SEQUENCE" DTS:LocaleID="-1" DTS:ObjectName="Migrate To New Table" DTS:refId="Package\Migrate To New Table">
+      <DTS:PropertyExpression DTS:Name="Disable">!(@[$Project::PerformMigration])</DTS:PropertyExpression>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint DTS:CreationName="" DTS:DTSID="{8F989AF5-CB90-4053-92DB-58B7D51D0F52}" DTS:From="Package\Delete From New Tables" DTS:LogicalAnd="True" DTS:ObjectName="Constraint_Delete From New Tables_To_Migrate To New Table" DTS:refId="Package.PrecedenceConstraints[Constraint_Delete From New Tables_To_Migrate To New Table]" DTS:To="Package\Migrate To New Table">
+    </DTS:PrecedenceConstraint>
+  </DTS:PrecedenceConstraints>
+  <DTS:Property DTS:Name="PackageFormatVersion">8</DTS:Property>
+</DTS:Executable>

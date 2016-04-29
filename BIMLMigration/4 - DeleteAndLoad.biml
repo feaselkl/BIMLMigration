@@ -1,6 +1,3 @@
-<#@ template language="C#" hostspecific="true" #>
-<#@ import namespace="System.Data" #>
- 
 <Biml xmlns="http://schemas.varigence.com/biml.xsd">
     <#
     string metadataConnectionString ="Provider=SQLNCLI11;Server=LOCALHOST;Initial Catalog=AdventureWorksDW2014;Integrated Security=SSPI;";
@@ -112,3 +109,5 @@
         </Package>
     </Packages>
 </Biml>
+<#@ template language="C#" hostspecific="true" #>
+<#@ import namespace="System.Data" #>
