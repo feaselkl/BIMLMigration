@@ -1,0 +1,10 @@
+<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+    <Connections>
+        <!-- Connections we will use in our packages -->
+        <Connection Name="OldWarehouseNode" ConnectionString="Data Source=LOCALHOST;Initial Catalog=AdventureWorksDW2014;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+        <Connection Name="NewWarehouseNode" ConnectionString="Data Source=LOCALHOST;Initial Catalog=AdventureWorksDW2014Dest;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+        <!-- Connection we will use to retrieve information to build our packages -->
+        <Connection Name="MetadataConnectionString" ConnectionString="Provider=SQLNCLI11;Server=LOCALHOST;Initial Catalog=AdventureWorksDW2014;Integrated Security=SSPI;" />
+    </Connections>
+</Biml>
+<#@ template tier="1" #>

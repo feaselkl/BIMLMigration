@@ -1,0 +1,73 @@
+<#@ import namespace="Varigence.Biml.CoreLowerer.SchemaManagement" #>
+<#@ include file="i-MetadataTable.biml"  #> 
+<#
+    var metadataConn = RootNode.OleDbConnections["MetadataConnectionString"];
+    var tables = metadataConn.GetDataTable("SELECT SchemaName, TableName, Section, JoinCriteria, SelectCriteria, WhereCriteria, NeedToDelete, LookupColumns, LookupColumnXML, CASE WHEN WhereCriteria = '1 = 1' THEN '1 = 1 \"' ELSE REPLACE(WhereCriteria, '?', '\" + (DT_WSTR, 12)@[$Project::CustomerID]') END AS ExpressionWhereCriteria FROM dbo.MigrationStep ORDER BY Section, SchemaName, TableName");
+    List<MetadataTable> md = new List<MetadataTable>();
+    foreach (DataRow dr in tables.Rows)
+    {
+        md.Add(new MetadataTable(dr));
+    }
+    
+    List<int> sections = md.Select(x => x.Section).Distinct().OrderBy(x => x).ToList();#>
+    <Container Name="Migrate To New Table" ConstraintMode="Linear">
+        <Expressions>
+            <Expression ExternalProperty="Disable">!(@[$Project::PerformMigration])</Expression>
+        </Expressions>
+        <Tasks>
+            <# foreach (int section in sections) { #>
+            <Container Name="Migrate To New Table <#=section#>" ConstraintMode="Linear">
+                <Tasks>
+                <# foreach (MetadataTable m in md.Where(s => s.Section == section)) { #>
+                    <Dataflow Name="Migrate <#=m.TableName#>" DefaultBufferSize="104857600">
+                        <Transformations>
+                            <OleDbSource Name="Old Node" ConnectionName="OldWarehouseNode">
+                                <DirectInput>
+                                    SELECT 
+                                        <#=m.SelectCriteria#>
+                                    FROM [<#=m.SchemaName#>].[<#=m.TableName#>] x 
+                                        <#=m.JoinCriteria#>
+                                    WHERE
+                                        <#=m.WhereCriteria#>;
+                                </DirectInput>
+                                <Parameters>
+                                    <Parameter Name="0" VariableName="BIMLMigration.CustomerID" />
+                                </Parameters>
+                            </OleDbSource>
+                            <# if(!m.NeedToDelete) {#>
+                            <Lookup Name="Lookup" OleDbConnectionName="NewWarehouseNode" CacheMode="Full" NoMatchBehavior="RedirectRowsToNoMatchOutput">
+                                <DirectInput>
+                                    SELECT
+                                        <#=m.LookupColumns#>
+                                    FROM [<#=m.SchemaName#>].[<#=m.TableName#>] x
+                                </DirectInput>
+                                <Inputs>
+                                    <#=m.LookupColumnXML#>
+                                </Inputs>
+                                <Outputs></Outputs>
+                            </Lookup>
+                            <# } #>
+                            <OleDbDestination Name="New Node" ConnectionName="NewWarehouseNode" BatchSize="10000" KeepIdentity=<# if(!m.NeedToDelete) { #> "true" <# } else { #> "false" <# } #> UseFastLoadIfAvailable="true" MaximumInsertCommitSize="2000000">
+                            <# if(!m.NeedToDelete) {#>
+                                <InputPath OutputPathName="Lookup.NoMatch"></InputPath>
+                            <# } #>
+                                <ExternalTableOutput Table="[<#=m.SchemaName#>].[<#=m.TableName#>]"></ExternalTableOutput>
+                            </OleDbDestination>
+                        </Transformations>
+                        <Expressions>
+                            <Expression ExternalProperty="[Lookup].[SqlCommand]">
+                                "SELECT DISTINCT
+                                    <#=m.LookupColumns#>
+                                FROM [<#=m.SchemaName#>].[<#=m.TableName#>] x
+                                    <#=m.JoinCriteria#>
+                                WHERE
+                                    <#=m.ExpressionWhereCriteria#>
+                            </Expression>
+                        </Expressions>
+                    </Dataflow>
+                <# } #>
+                </Tasks>
+            </Container>
+            <# } #>
+        </Tasks>
+    </Container>

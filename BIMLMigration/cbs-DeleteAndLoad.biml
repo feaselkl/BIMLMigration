@@ -1,0 +1,68 @@
+<#@ import namespace="Varigence.Biml.CoreLowerer.SchemaManagement" #>
+<#@ include file="i-MetadataTable.biml"  #> 
+<#
+    var metadataConn = RootNode.OleDbConnections["MetadataConnectionString"];
+    var tables = metadataConn.GetDataTable("SELECT SchemaName, TableName, Section, JoinCriteria, SelectCriteria, WhereCriteria, NeedToDelete, LookupColumns, LookupColumnXML, CASE WHEN WhereCriteria = '1 = 1' THEN '1 = 1 \"' ELSE REPLACE(WhereCriteria, '?', '\" + (DT_WSTR, 12)@[$Project::CustomerID]') END AS ExpressionWhereCriteria FROM dbo.MigrationStep ORDER BY Section, SchemaName, TableName");
+    List<MetadataTable> md = new List<MetadataTable>();
+    foreach (DataRow dr in tables.Rows)
+    {
+        md.Add(new MetadataTable(dr));
+    }
+    
+    List<int> sections = md.Select(x => x.Section).Distinct().OrderBy(x => x).ToList();
+    List<int> sectionsDesc = sections.OrderByDescending(x => x).ToList();#>
+    <Container Name="Delete From New Tables" ConstraintMode="Linear">
+        <Expressions>
+            <Expression ExternalProperty="Disable">!(@[$Project::PerformDeletion])</Expression>
+        </Expressions>
+        <Tasks>
+            <#foreach(int section in sectionsDesc) {#>
+              <Container Name="Delete From New Table <#=section#>" ConstraintMode="Parallel">
+                  <Tasks>
+                      <# foreach (MetadataTable m in md.Where(s => s.Section == section)) { #>
+                        <ExecuteSQL Name="Prepare <#=m.TableName#>" ConnectionName="NewWarehouseNode">
+                            <DirectInput>
+                                DELETE FROM [<#=m.SchemaName#>].[<#=m.TableName#>];
+                            </DirectInput>
+                        </ExecuteSQL>
+                      <# } #>
+                  </Tasks>
+              </Container>
+            <# } #>
+        </Tasks>
+    </Container>
+    <Container Name="Migrate To New Table" ConstraintMode="Linear">
+        <Expressions>
+            <Expression ExternalProperty="Disable">!(@[$Project::PerformMigration])</Expression>
+        </Expressions>
+        <Tasks>
+            <# foreach (int section in sections) { #>
+            <Container Name="Migrate To New Table <#=section#>" ConstraintMode="Parallel">
+                <Tasks>
+                <# foreach (MetadataTable m in md.Where(s => s.Section == section)) { #>
+                    <Dataflow Name="Migrate <#=m.TableName#>" DefaultBufferSize="104857600">
+                        <Transformations>
+                            <OleDbSource Name="Old Node" ConnectionName="OldWarehouseNode">
+                                <DirectInput>
+                                    SELECT 
+                                        <#=m.SelectCriteria#>
+                                    FROM [<#=m.SchemaName#>].[<#=m.TableName#>] x 
+                                        <#=m.JoinCriteria#>
+                                    WHERE
+                                        <#=m.WhereCriteria#>;
+                                </DirectInput>
+                                <Parameters>
+                                    <Parameter Name="0" VariableName="BIMLMigration.CustomerID" />
+                                </Parameters>
+                            </OleDbSource>
+                            <OleDbDestination Name="New Node" ConnectionName="NewWarehouseNode" BatchSize="10000" KeepIdentity=<# if(!m.NeedToDelete) { #> "true" <# } else { #> "false" <# } #> UseFastLoadIfAvailable="true" MaximumInsertCommitSize="2000000">
+                                <ExternalTableOutput Table="[<#=m.SchemaName#>].[<#=m.TableName#>]"></ExternalTableOutput>
+                            </OleDbDestination>
+                        </Transformations>
+                    </Dataflow>
+                <# } #>
+                </Tasks>
+            </Container>
+            <# } #>
+        </Tasks>
+    </Container>

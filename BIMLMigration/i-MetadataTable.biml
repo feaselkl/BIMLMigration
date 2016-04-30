@@ -1,0 +1,31 @@
+<#+
+    public class MetadataTable
+    {
+        public string SchemaName { get; set; }
+        public string TableName { get; set; }
+        public int Section { get; set; }
+        public string JoinCriteria { get; set; }
+        public string SelectCriteria { get; set; }
+        public string WhereCriteria { get; set; }
+        public bool NeedToDelete { get; set; }
+        public string LookupColumns { get; set; }
+        public string LookupColumnXML { get; set; }
+        public string ExpressionWhereCriteria { get; set; }
+
+        public MetadataTable(DataRow dr)
+        {
+            SchemaName = dr[0].ToString();
+            TableName = dr[1].ToString();
+            Section = Convert.ToInt32(dr[2]);
+            JoinCriteria = dr[3].ToString();
+            SelectCriteria = dr[4].ToString();
+            WhereCriteria = dr[5].ToString();
+            NeedToDelete = Convert.ToBoolean(dr[6]);
+            LookupColumns = dr[7].ToString();
+            LookupColumnXML = dr[8].ToString();
+            ExpressionWhereCriteria = dr[9].ToString();
+        }
+    }
+#>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Data" #>

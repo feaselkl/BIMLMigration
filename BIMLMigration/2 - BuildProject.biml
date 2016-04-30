@@ -1,0 +1,41 @@
+<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+    <Projects>
+        <PackageProject Name="BIMLMigration" ProtectionLevel="DontSaveSensitive">
+            <Parameters>
+                <Parameter Name="CustomerID" DataType="Int32">12195</Parameter>
+                <Parameter Name="OldWarehouseServer" DataType="String">.</Parameter>
+                <Parameter Name="OldWarehouseDatabase" DataType="String">AdventureWorksDW2014</Parameter>
+                <Parameter Name="NewWarehouseServer" DataType="String">.</Parameter>
+                <Parameter Name="NewWarehouseDatabase" DataType="String">AdventureWorksDW2014Dest</Parameter>
+                <Parameter Name="PerformMigration" DataType="Boolean">True</Parameter>
+                <Parameter Name="PerformDeletion" DataType="Boolean">True</Parameter>
+            </Parameters>
+            <Packages>
+                <Package PackageName="MigrateCustomer" />
+            </Packages>
+        </PackageProject>
+    </Projects>
+    <Packages>
+		<Package Name="MigrateCustomer" ConstraintMode="Linear" ProtectionLevel="DontSaveSensitive">
+			<Connections>
+				<Connection ConnectionName="OldWarehouseNode">
+					<Expressions>
+						<Expression ExternalProperty="InitialCatalog">@[$Project::OldWarehouseDatabase]</Expression>
+						<Expression ExternalProperty="ServerName">@[$Project::OldWarehouseServer]</Expression>
+					</Expressions>
+				</Connection>
+				<Connection ConnectionName="NewWarehouseNode">
+					<Expressions>
+						<Expression ExternalProperty="InitialCatalog">@[$Project::NewWarehouseDatabase]</Expression>
+						<Expression ExternalProperty="ServerName">@[$Project::NewWarehouseServer]</Expression>
+					</Expressions>
+				</Connection>
+			</Connections>
+		    <Tasks>
+		        <#=CallBimlScript("cbs-DeleteAndLoad.biml") #>
+		        <#*=CallBimlScript("cbs-LookupLoad.biml") *#>
+		    </Tasks>
+	    </Package>
+    </Packages>
+</Biml>
+<#@ template tier="2"#>
