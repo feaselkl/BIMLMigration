@@ -2,7 +2,6 @@
     <Projects>
         <PackageProject Name="BIMLMigration" ProtectionLevel="DontSaveSensitive">
             <Parameters>
-                <Parameter Name="CustomerID" DataType="Int32">12195</Parameter>
                 <Parameter Name="OldWarehouseServer" DataType="String">.</Parameter>
                 <Parameter Name="OldWarehouseDatabase" DataType="String">AdventureWorksDW2014</Parameter>
                 <Parameter Name="NewWarehouseServer" DataType="String">.</Parameter>
@@ -31,9 +30,12 @@
 					</Expressions>
 				</Connection>
 			</Connections>
+			<Variables>
+			    <Variable DataType="Int32" Name="CustomerID">12195</Variable>
+			</Variables>
 		    <Tasks>
-		        <#=CallBimlScript("cbs-DeleteAndLoad.biml") #>
-		        <#*=CallBimlScript("cbs-LookupLoad.biml") *#>
+		        <#*=CallBimlScript("cbs-DeleteAndLoad.biml") *#>
+		        <#=CallBimlScript("cbs-LookupLoad.biml") #>
 		    </Tasks>
 	    </Package>
     </Packages>

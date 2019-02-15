@@ -2,7 +2,7 @@
 <#@ include file="i-MetadataTable.biml"  #> 
 <#
     var metadataConn = RootNode.OleDbConnections["MetadataConnectionString"];
-    var tables = metadataConn.GetDataTable("SELECT SchemaName, TableName, Section, JoinCriteria, SelectCriteria, WhereCriteria, NeedToDelete, LookupColumns, LookupColumnXML, CASE WHEN WhereCriteria = '1 = 1' THEN '1 = 1 \"' ELSE REPLACE(WhereCriteria, '?', '\" + (DT_WSTR, 12)@[$Project::CustomerID]') END AS ExpressionWhereCriteria FROM dbo.MigrationStep ORDER BY Section, SchemaName, TableName");
+    var tables = metadataConn.GetDataTable("SELECT SchemaName, TableName, Section, JoinCriteria, SelectCriteria, WhereCriteria, NeedToDelete, LookupColumns, LookupColumnXML, CASE WHEN WhereCriteria = '1 = 1' THEN '1 = 1 \"' ELSE REPLACE(WhereCriteria, '?', '\" + (DT_WSTR, 12)@[$Package::CustomerID]') END AS ExpressionWhereCriteria FROM dbo.MigrationStep ORDER BY Section, SchemaName, TableName");
     List<MetadataTable> md = new List<MetadataTable>();
     foreach (DataRow dr in tables.Rows)
     {
