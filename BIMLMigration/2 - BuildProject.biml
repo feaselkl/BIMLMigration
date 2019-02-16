@@ -32,6 +32,7 @@
 			</Connections>
 			<Variables>
 			    <Variable DataType="Int32" Name="CustomerID">12195</Variable>
+		        <#=CallBimlScript("cbs-CreateVariables.biml") #>
 			</Variables>
 		    <Tasks>
 		        <#*=CallBimlScript("cbs-DeleteAndLoad.biml") *#>

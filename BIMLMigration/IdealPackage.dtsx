@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="12/5/2015 10:03:33 PM"
@@ -7,13 +7,13 @@
   DTS:CreatorName="DESKTOP-BFJ1BGV\Kevin Feasel"
   DTS:DTSID="{BD0DD5D8-875D-4E30-8DC8-026EB9E6AD6A}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="12.0.4100.1"
+  DTS:LastModifiedProductVersion="15.0.1100.123"
   DTS:LocaleID="1033"
   DTS:ObjectName="IdealPackage"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
   DTS:VersionBuild="11"
-  DTS:VersionGUID="{CF8BB2B5-04A1-45C3-BC51-2C8D45691110}">
+  DTS:VersionGUID="{298B4BED-95B6-46D0-9886-A2AB6F617B32}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -191,7 +191,7 @@
                       dataType="System.String"
                       description="The SQL command to be executed."
                       name="SqlCommand"
-                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                     <property
                       dataType="System.Int32"
                       description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -624,7 +624,7 @@
                       dataType="System.String"
                       description="The SQL command to be executed."
                       name="SqlCommand"
-                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT * FROM dbo.DimCustomer WHERE CustomerKey = ?</property>
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT * FROM dbo.DimCustomer WHERE CustomerKey = ?</property>
                     <property
                       dataType="System.String"
                       description="The variable that contains the SQL command to be executed."

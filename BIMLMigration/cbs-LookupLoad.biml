@@ -31,7 +31,7 @@
                                         <#=m.WhereCriteria#>;
                                 </DirectInput>
                                 <Parameters>
-                                    <Parameter Name="0" VariableName="BIMLMigration.CustomerID" />
+                                    <Parameter Name="0" VariableName="User.CustomerID" />
                                 </Parameters>
                             </OleDbSource>
                             <# if(!m.NeedToDelete) {#>
@@ -56,12 +56,7 @@
                         </Transformations>
                         <Expressions>
                             <Expression ExternalProperty="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    <#=m.LookupColumns#>
-                                FROM [<#=m.SchemaName#>].[<#=m.TableName#>] x
-                                    <#=m.JoinCriteria#>
-                                WHERE
-                                    <#=m.ExpressionWhereCriteria#>
+                                @[User::<#=m.TableName#>_LookupWhere]
                             </Expression>
                         </Expressions>
                     </Dataflow>

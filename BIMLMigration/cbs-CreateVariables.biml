@@ -1,0 +1,22 @@
+﻿<#@ import namespace="Varigence.Biml.CoreLowerer.SchemaManagement" #>
+<#@ include file="i-MetadataTable.biml"  #> 
+<#
+    var metadataConn = RootNode.OleDbConnections["MetadataConnectionString"];
+    var tables = metadataConn.GetDataTable("SELECT SchemaName, TableName, Section, JoinCriteria, SelectCriteria, WhereCriteria, NeedToDelete, LookupColumns, LookupColumnXML, CASE WHEN WhereCriteria = '1 = 1' THEN '-99999 != ' ELSE REPLACE(WhereCriteria, '?', '') END AS ExpressionWhereCriteria FROM dbo.MigrationStep ORDER BY Section, SchemaName, TableName");
+    List<MetadataTable> md = new List<MetadataTable>();
+    foreach (DataRow dr in tables.Rows)
+    {
+        md.Add(new MetadataTable(dr));
+    }
+    
+    foreach (MetadataTable m in md) { #>
+<Variable DataType="String" EvaluateAsExpression="true" Name="<#=m.TableName#>_LookupWhere"><#=m.Section#> > 0 ? "SELECT DISTINCT
+    <#=m.LookupColumns#>
+FROM [<#=m.SchemaName#>].[<#=m.TableName#>] x
+    <#=m.JoinCriteria#>
+WHERE
+    <#=m.ExpressionWhereCriteria#> " + (DT_WSTR, 8)@[User::CustomerID] : "SELECT DISTINCT
+<#=m.LookupColumns#>
+FROM [<#=m.SchemaName#>].[<#=m.TableName#>] x"
+    </Variable>
+<# } #>

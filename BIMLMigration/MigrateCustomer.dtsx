@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
-  DTS:CreationDate="9/24/2016 2:43:20 PM"
+  DTS:CreationDate="2/16/2019 8:11:19 AM"
   DTS:CreationName="Microsoft.Package"
-  DTS:CreatorComputerName="WILLIAMSON"
+  DTS:CreatorComputerName="DESKTOP-GOTV4U3"
   DTS:CreatorName="fease"
-  DTS:DTSID="{404CCCE6-D123-406C-95E4-1488395C9CBC}"
+  DTS:DTSID="{14EE0D2C-D02D-48DB-A9CA-A75648F5E1DE}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="13.0.1601.5"
+  DTS:LastModifiedProductVersion="15.0.1100.123"
   DTS:LocaleID="1033"
   DTS:ObjectName="MigrateCustomer"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="1"
-  DTS:VersionGUID="{5AD54D4E-1FD7-48E1-BA6F-F9FA010C944E}"
+  DTS:VersionBuild="2"
+  DTS:VersionGUID="{A9C08C74-F4EF-4BBC-858B-8D6CB7A601AD}"
   DTS:VersionMajor="0">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
@@ -20,7 +20,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[NewWarehouseNode]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{E25383FC-BC97-4A29-A8D0-9F8D3B33DFDF}"
+      DTS:DTSID="{7F1D868F-43EA-4899-9818-A5B3016F0E4D}"
       DTS:ObjectName="NewWarehouseNode">
       <DTS:PropertyExpression
         DTS:Name="InitialCatalog">@[$Project::NewWarehouseDatabase]</DTS:PropertyExpression>
@@ -34,7 +34,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[OldWarehouseNode]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{DBF554EB-2006-4F92-A38C-7BA7D7013393}"
+      DTS:DTSID="{651E8B2B-9EB1-4CAA-B330-10A0BDF19AD2}"
       DTS:ObjectName="OldWarehouseNode">
       <DTS:PropertyExpression
         DTS:Name="InitialCatalog">@[$Project::OldWarehouseDatabase]</DTS:PropertyExpression>
@@ -46,12 +46,200 @@
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
-  <DTS:Variables />
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F5E935CA-A01D-4725-A97E-44C6626CEFD7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="CustomerID">
+      <DTS:VariableValue
+        DTS:DataType="3">12194</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C72F3795-0366-4F25-A25C-58364736EBB3}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="0 &gt; 0 ? &quot;SELECT DISTINCT&#xA;    x.CurrencyKey&#xA;FROM [dbo].[DimCurrency] x&#xA;    INNER JOIN dbo.FactInternetSales f ON x.CurrencyKey = f.CurrencyKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey&#xA;WHERE&#xA;    c.CustomerKey =  &quot; + (DT_WSTR, 8)@[User::CustomerID] : &quot;SELECT DISTINCT&#xA;x.CurrencyKey&#xA;FROM [dbo].[DimCurrency] x&quot;&#xA;    "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DimCurrency_LookupWhere">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT DISTINCT
+x.CurrencyKey
+FROM [dbo].[DimCurrency] x</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DD7639AC-849A-4412-A40A-7FACD74DC67E}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="0 &gt; 0 ? &quot;SELECT DISTINCT&#xA;    x.CustomerKey&#xA;FROM [dbo].[DimCustomer] x&#xA;    &#xA;WHERE&#xA;    x.CustomerKey =  &quot; + (DT_WSTR, 8)@[User::CustomerID] : &quot;SELECT DISTINCT&#xA;x.CustomerKey&#xA;FROM [dbo].[DimCustomer] x&quot;&#xA;    "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DimCustomer_LookupWhere">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT DISTINCT
+x.CustomerKey
+FROM [dbo].[DimCustomer] x</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2799E65B-E252-4B16-AD93-8AB4391E02C6}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="0 &gt; 0 ? &quot;SELECT DISTINCT&#xA;    x.DateKey&#xA;FROM [dbo].[DimDate] x&#xA;    &#xA;WHERE&#xA;    -99999 !=  &quot; + (DT_WSTR, 8)@[User::CustomerID] : &quot;SELECT DISTINCT&#xA;x.DateKey&#xA;FROM [dbo].[DimDate] x&quot;&#xA;    "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DimDate_LookupWhere">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT DISTINCT
+x.DateKey
+FROM [dbo].[DimDate] x</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{96CA32B9-C53D-460D-9839-A049ADECC7CC}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="-1 &gt; 0 ? &quot;SELECT DISTINCT&#xA;    x.GeographyKey&#xA;FROM [dbo].[DimGeography] x&#xA;    INNER JOIN dbo.DimCustomer c ON x.GeographyKey = c.GeographyKey&#xA;WHERE&#xA;    c.CustomerKey =  &quot; + (DT_WSTR, 8)@[User::CustomerID] : &quot;SELECT DISTINCT&#xA;x.GeographyKey&#xA;FROM [dbo].[DimGeography] x&quot;&#xA;    "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DimGeography_LookupWhere">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT DISTINCT
+x.GeographyKey
+FROM [dbo].[DimGeography] x</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{956BC352-F2CF-4706-A8FF-A4130D9D7F40}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="-2 &gt; 0 ? &quot;SELECT DISTINCT&#xA;    x.ProductCategoryKey&#xA;FROM [dbo].[DimProductCategory] x&#xA;    INNER JOIN dbo.DimProductSubcategory s ON s.ProductCategoryKey = x.ProductCategoryKey INNER JOIN dbo.DimProduct p ON p.ProductSubcategoryKey = s.ProductSubcategoryKey INNER JOIN dbo.FactInternetSales f ON p.ProductKey = f.ProductKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey&#xA;WHERE&#xA;    c.CustomerKey =  &quot; + (DT_WSTR, 8)@[User::CustomerID] : &quot;SELECT DISTINCT&#xA;x.ProductCategoryKey&#xA;FROM [dbo].[DimProductCategory] x&quot;&#xA;    "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DimProductCategory_LookupWhere">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT DISTINCT
+x.ProductCategoryKey
+FROM [dbo].[DimProductCategory] x</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4477813F-5735-4E29-95B9-E245FB64517A}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="-1 &gt; 0 ? &quot;SELECT DISTINCT&#xA;    x.ProductSubcategoryKey&#xA;FROM [dbo].[DimProductSubcategory] x&#xA;    INNER JOIN dbo.DimProduct p ON p.ProductSubcategoryKey = x.ProductSubcategoryKey INNER JOIN dbo.FactInternetSales f ON p.ProductKey = f.ProductKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey&#xA;WHERE&#xA;    c.CustomerKey =  &quot; + (DT_WSTR, 8)@[User::CustomerID] : &quot;SELECT DISTINCT&#xA;x.ProductSubcategoryKey&#xA;FROM [dbo].[DimProductSubcategory] x&quot;&#xA;    "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DimProductSubcategory_LookupWhere">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT DISTINCT
+x.ProductSubcategoryKey
+FROM [dbo].[DimProductSubcategory] x</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D1AB73C3-96F2-4968-9C32-06FA0732FA6C}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="0 &gt; 0 ? &quot;SELECT DISTINCT&#xA;    x.ProductKey&#xA;FROM [dbo].[DimProduct] x&#xA;    INNER JOIN dbo.FactInternetSales f ON x.ProductKey = f.ProductKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey&#xA;WHERE&#xA;    c.CustomerKey =  &quot; + (DT_WSTR, 8)@[User::CustomerID] : &quot;SELECT DISTINCT&#xA;x.ProductKey&#xA;FROM [dbo].[DimProduct] x&quot;&#xA;    "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DimProduct_LookupWhere">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT DISTINCT
+x.ProductKey
+FROM [dbo].[DimProduct] x</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4C9F845E-354D-4BB2-9BC4-6FF6108EAB28}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="0 &gt; 0 ? &quot;SELECT DISTINCT&#xA;    x.PromotionKey&#xA;FROM [dbo].[DimPromotion] x&#xA;    INNER JOIN dbo.FactInternetSales f ON x.PromotionKey = f.PromotionKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey&#xA;WHERE&#xA;    c.CustomerKey =  &quot; + (DT_WSTR, 8)@[User::CustomerID] : &quot;SELECT DISTINCT&#xA;x.PromotionKey&#xA;FROM [dbo].[DimPromotion] x&quot;&#xA;    "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DimPromotion_LookupWhere">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT DISTINCT
+x.PromotionKey
+FROM [dbo].[DimPromotion] x</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CF561A0C-DEC8-422A-A4B9-30C9745FD19E}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="0 &gt; 0 ? &quot;SELECT DISTINCT&#xA;    x.SalesReasonKey&#xA;FROM [dbo].[DimSalesReason] x&#xA;    INNER JOIN dbo.FactInternetSalesReason fsr ON x.SalesReasonKey = fsr.SalesReasonKey INNER JOIN dbo.FactInternetSales f ON fsr.SalesOrderNumber = f.SalesOrderNumber AND fsr.SalesOrderLineNumber = f.SalesOrderLineNumber INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey&#xA;WHERE&#xA;    c.CustomerKey =  &quot; + (DT_WSTR, 8)@[User::CustomerID] : &quot;SELECT DISTINCT&#xA;x.SalesReasonKey&#xA;FROM [dbo].[DimSalesReason] x&quot;&#xA;    "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DimSalesReason_LookupWhere">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT DISTINCT
+x.SalesReasonKey
+FROM [dbo].[DimSalesReason] x</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6FFE94C5-9490-4BE8-821A-40F5391C5528}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="-2 &gt; 0 ? &quot;SELECT DISTINCT&#xA;    x.SalesTerritoryKey&#xA;FROM [dbo].[DimSalesTerritory] x&#xA;    INNER JOIN dbo.DimGeography g ON x.SalesTerritoryKey = g.SalesTerritoryKey INNER JOIN dbo.DimCustomer c ON g.GeographyKey = c.GeographyKey&#xA;WHERE&#xA;    c.CustomerKey =  &quot; + (DT_WSTR, 8)@[User::CustomerID] : &quot;SELECT DISTINCT&#xA;x.SalesTerritoryKey&#xA;FROM [dbo].[DimSalesTerritory] x&quot;&#xA;    "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DimSalesTerritory_LookupWhere">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT DISTINCT
+x.SalesTerritoryKey
+FROM [dbo].[DimSalesTerritory] x</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AD3B9470-CE2A-48EC-A68A-A4F020C9C1E2}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="2 &gt; 0 ? &quot;SELECT DISTINCT&#xA;    x.SalesOrderNumber, x.SalesOrderLineNumber, x.SalesReasonKey&#xA;FROM [dbo].[FactInternetSalesReason] x&#xA;    INNER JOIN dbo.FactInternetSales f ON x.SalesOrderNumber = f.SalesOrderNumber AND x.SalesOrderLineNumber = f.SalesOrderLineNumber INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey&#xA;WHERE&#xA;    c.CustomerKey =  &quot; + (DT_WSTR, 8)@[User::CustomerID] : &quot;SELECT DISTINCT&#xA;x.SalesOrderNumber, x.SalesOrderLineNumber, x.SalesReasonKey&#xA;FROM [dbo].[FactInternetSalesReason] x&quot;&#xA;    "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FactInternetSalesReason_LookupWhere">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT DISTINCT
+    x.SalesOrderNumber, x.SalesOrderLineNumber, x.SalesReasonKey
+FROM [dbo].[FactInternetSalesReason] x
+    INNER JOIN dbo.FactInternetSales f ON x.SalesOrderNumber = f.SalesOrderNumber AND x.SalesOrderLineNumber = f.SalesOrderLineNumber INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
+WHERE
+    c.CustomerKey =  12194</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{132B3893-60AF-40A3-A6DC-781A44700FEA}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="1 &gt; 0 ? &quot;SELECT DISTINCT&#xA;    x.SalesOrderNumber, x.SalesOrderLineNumber&#xA;FROM [dbo].[FactInternetSales] x&#xA;    INNER JOIN dbo.DimCustomer c ON x.CustomerKey = c.CustomerKey&#xA;WHERE&#xA;    c.CustomerKey =  &quot; + (DT_WSTR, 8)@[User::CustomerID] : &quot;SELECT DISTINCT&#xA;x.SalesOrderNumber, x.SalesOrderLineNumber&#xA;FROM [dbo].[FactInternetSales] x&quot;&#xA;    "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FactInternetSales_LookupWhere">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT DISTINCT
+    x.SalesOrderNumber, x.SalesOrderLineNumber
+FROM [dbo].[FactInternetSales] x
+    INNER JOIN dbo.DimCustomer c ON x.CustomerKey = c.CustomerKey
+WHERE
+    c.CustomerKey =  12194</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7256A210-5A47-4C80-9666-C6BD89B5BFE2}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="1 &gt; 0 ? &quot;SELECT DISTINCT&#xA;    x.SurveyResponseKey&#xA;FROM [dbo].[FactSurveyResponse] x&#xA;    INNER JOIN dbo.DimCustomer c ON x.CustomerKey = c.CustomerKey&#xA;WHERE&#xA;    c.CustomerKey =  &quot; + (DT_WSTR, 8)@[User::CustomerID] : &quot;SELECT DISTINCT&#xA;x.SurveyResponseKey&#xA;FROM [dbo].[FactSurveyResponse] x&quot;&#xA;    "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FactSurveyResponse_LookupWhere">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT DISTINCT
+    x.SurveyResponseKey
+FROM [dbo].[FactSurveyResponse] x
+    INNER JOIN dbo.DimCustomer c ON x.CustomerKey = c.CustomerKey
+WHERE
+    c.CustomerKey =  12194</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
   <DTS:Executables>
     <DTS:Executable
       DTS:refId="Package\Migrate To New Table"
       DTS:CreationName="STOCK:SEQUENCE"
-      DTS:DTSID="{308DD196-3D15-4CA7-9ACA-A01B73B001FB}"
+      DTS:DTSID="{BF647C34-6B24-43CD-AFE2-930787C0E912}"
       DTS:ExecutableType="STOCK:SEQUENCE"
       DTS:LocaleID="-1"
       DTS:ObjectName="Migrate To New Table">
@@ -62,7 +250,7 @@
         <DTS:Executable
           DTS:refId="Package\Migrate To New Table\Migrate To New Table -1"
           DTS:CreationName="STOCK:SEQUENCE"
-          DTS:DTSID="{B1B07952-CBE9-4DFD-B715-CBFC38B9AAA7}"
+          DTS:DTSID="{B8DC5F1A-18C4-4842-A45C-3BA8E6451527}"
           DTS:ExecutableType="STOCK:SEQUENCE"
           DTS:LocaleID="-1"
           DTS:ObjectName="Migrate To New Table -1">
@@ -71,7 +259,7 @@
             <DTS:Executable
               DTS:refId="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimGeography"
               DTS:CreationName="Microsoft.Pipeline"
-              DTS:DTSID="{43DE17CE-345B-4FD1-ADDD-3C190CDE3978}"
+              DTS:DTSID="{DBF2C685-7107-4CDC-99D5-8CBEC2BDE682}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
               DTS:ObjectName="Migrate DimGeography"
@@ -79,12 +267,7 @@
               <DTS:Variables />
               <DTS:PropertyExpression
                 DTS:Name="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    x.GeographyKey
-                                FROM [dbo].[DimGeography] x
-                                    INNER JOIN dbo.DimCustomer c ON x.GeographyKey = c.GeographyKey
-                                WHERE
-                                    c.CustomerKey = " + (DT_WSTR, 12)@[$Project::CustomerID]
+                                @[User::DimGeography_LookupWhere]
                             </DTS:PropertyExpression>
               <DTS:ObjectData>
                 <pipeline
@@ -106,18 +289,15 @@
                           description="Specifies the SQL statement that generates the lookup table."
                           expressionType="Notify"
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
-                                    x.GeographyKey
-                                FROM [dbo].[DimGeography] x
-                                    INNER JOIN dbo.DimCustomer c ON x.GeographyKey = c.GeographyKey
-                                WHERE
-                                    c.CustomerKey = 12195</property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+x.GeographyKey
+FROM [dbo].[DimGeography] x</property>
                         <property
                           dataType="System.String"
                           description="Specifies a SQL statement that uses parameters to generate the lookup table."
                           expressionType="Notify"
                           name="SqlCommandParam"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
                                     SELECT
                                         x.GeographyKey
                                     FROM [dbo].[DimGeography] x
@@ -269,7 +449,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -498,7 +678,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
                                     SELECT 
                                         DISTINCT x.*
                                     FROM [dbo].[DimGeography] x 
@@ -526,7 +706,7 @@
                         <property
                           dataType="System.String"
                           description="The mappings between the parameters in the SQL command and variables."
-                          name="ParameterMapping">"0",$Project::CustomerID;</property>
+                          name="ParameterMapping">"0",User::CustomerID;</property>
                       </properties>
                       <connections>
                         <connection
@@ -812,7 +992,7 @@
             <DTS:Executable
               DTS:refId="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimProductSubcategory"
               DTS:CreationName="Microsoft.Pipeline"
-              DTS:DTSID="{AA8B0E81-8806-4D45-942B-6B67D663B80F}"
+              DTS:DTSID="{9CA78D36-CB69-4A9F-BF52-45D56467CB2B}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
               DTS:ObjectName="Migrate DimProductSubcategory"
@@ -820,12 +1000,7 @@
               <DTS:Variables />
               <DTS:PropertyExpression
                 DTS:Name="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    x.ProductSubcategoryKey
-                                FROM [dbo].[DimProductSubcategory] x
-                                    INNER JOIN dbo.DimProduct p ON p.ProductSubcategoryKey = x.ProductSubcategoryKey INNER JOIN dbo.FactInternetSales f ON p.ProductKey = f.ProductKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = " + (DT_WSTR, 12)@[$Project::CustomerID]
+                                @[User::DimProductSubcategory_LookupWhere]
                             </DTS:PropertyExpression>
               <DTS:ObjectData>
                 <pipeline
@@ -847,18 +1022,15 @@
                           description="Specifies the SQL statement that generates the lookup table."
                           expressionType="Notify"
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
-                                    x.ProductSubcategoryKey
-                                FROM [dbo].[DimProductSubcategory] x
-                                    INNER JOIN dbo.DimProduct p ON p.ProductSubcategoryKey = x.ProductSubcategoryKey INNER JOIN dbo.FactInternetSales f ON p.ProductKey = f.ProductKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = 12195</property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+x.ProductSubcategoryKey
+FROM [dbo].[DimProductSubcategory] x</property>
                         <property
                           dataType="System.String"
                           description="Specifies a SQL statement that uses parameters to generate the lookup table."
                           expressionType="Notify"
                           name="SqlCommandParam"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
                                     SELECT
                                         x.ProductSubcategoryKey
                                     FROM [dbo].[DimProductSubcategory] x
@@ -1010,7 +1182,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -1177,7 +1349,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
                                     SELECT 
                                         DISTINCT x.*
                                     FROM [dbo].[DimProductSubcategory] x 
@@ -1205,7 +1377,7 @@
                         <property
                           dataType="System.String"
                           description="The mappings between the parameters in the SQL command and variables."
-                          name="ParameterMapping">"0",$Project::CustomerID;</property>
+                          name="ParameterMapping">"0",User::CustomerID;</property>
                       </properties>
                       <connections>
                         <connection
@@ -1385,7 +1557,7 @@
             <DTS:PrecedenceConstraint
               DTS:refId="Package\Migrate To New Table\Migrate To New Table -1.PrecedenceConstraints[Constraint_Migrate DimGeography_To_Migrate DimProductSubcategory]"
               DTS:CreationName=""
-              DTS:DTSID="{CBE10E20-B548-47C4-B101-A9806EED5A7C}"
+              DTS:DTSID="{4EB4D0B1-60FF-4280-A370-6811BEA440CF}"
               DTS:From="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimGeography"
               DTS:LogicalAnd="True"
               DTS:ObjectName="Constraint_Migrate DimGeography_To_Migrate DimProductSubcategory"
@@ -1395,7 +1567,7 @@
         <DTS:Executable
           DTS:refId="Package\Migrate To New Table\Migrate To New Table -2"
           DTS:CreationName="STOCK:SEQUENCE"
-          DTS:DTSID="{BF69544C-6D95-4F09-AE66-246D8159B4A1}"
+          DTS:DTSID="{A72DE05B-BE1B-48F4-94D9-1F2E38B6AE41}"
           DTS:ExecutableType="STOCK:SEQUENCE"
           DTS:LocaleID="-1"
           DTS:ObjectName="Migrate To New Table -2">
@@ -1404,7 +1576,7 @@
             <DTS:Executable
               DTS:refId="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimProductCategory"
               DTS:CreationName="Microsoft.Pipeline"
-              DTS:DTSID="{7CCC9567-0441-4CF2-AE5A-7CC1F8B0A9C4}"
+              DTS:DTSID="{307E0E2D-8F35-4DDB-8EB4-6D92E839712D}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
               DTS:ObjectName="Migrate DimProductCategory"
@@ -1412,12 +1584,7 @@
               <DTS:Variables />
               <DTS:PropertyExpression
                 DTS:Name="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    x.ProductCategoryKey
-                                FROM [dbo].[DimProductCategory] x
-                                    INNER JOIN dbo.DimProductSubcategory s ON s.ProductCategoryKey = x.ProductCategoryKey INNER JOIN dbo.DimProduct p ON p.ProductSubcategoryKey = s.ProductSubcategoryKey INNER JOIN dbo.FactInternetSales f ON p.ProductKey = f.ProductKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = " + (DT_WSTR, 12)@[$Project::CustomerID]
+                                @[User::DimProductCategory_LookupWhere]
                             </DTS:PropertyExpression>
               <DTS:ObjectData>
                 <pipeline
@@ -1439,18 +1606,15 @@
                           description="Specifies the SQL statement that generates the lookup table."
                           expressionType="Notify"
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
-                                    x.ProductCategoryKey
-                                FROM [dbo].[DimProductCategory] x
-                                    INNER JOIN dbo.DimProductSubcategory s ON s.ProductCategoryKey = x.ProductCategoryKey INNER JOIN dbo.DimProduct p ON p.ProductSubcategoryKey = s.ProductSubcategoryKey INNER JOIN dbo.FactInternetSales f ON p.ProductKey = f.ProductKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = 12195</property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+x.ProductCategoryKey
+FROM [dbo].[DimProductCategory] x</property>
                         <property
                           dataType="System.String"
                           description="Specifies a SQL statement that uses parameters to generate the lookup table."
                           expressionType="Notify"
                           name="SqlCommandParam"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
                                     SELECT
                                         x.ProductCategoryKey
                                     FROM [dbo].[DimProductCategory] x
@@ -1602,7 +1766,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -1759,7 +1923,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
                                     SELECT 
                                         DISTINCT x.*
                                     FROM [dbo].[DimProductCategory] x 
@@ -1787,7 +1951,7 @@
                         <property
                           dataType="System.String"
                           description="The mappings between the parameters in the SQL command and variables."
-                          name="ParameterMapping">"0",$Project::CustomerID;</property>
+                          name="ParameterMapping">"0",User::CustomerID;</property>
                       </properties>
                       <connections>
                         <connection
@@ -1947,7 +2111,7 @@
             <DTS:Executable
               DTS:refId="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimSalesTerritory"
               DTS:CreationName="Microsoft.Pipeline"
-              DTS:DTSID="{3A8971C5-1C88-4A2E-9BAE-A6FFFA2F4086}"
+              DTS:DTSID="{B85758B9-11EE-4BD6-966A-97D7DBF6FC72}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
               DTS:ObjectName="Migrate DimSalesTerritory"
@@ -1955,12 +2119,7 @@
               <DTS:Variables />
               <DTS:PropertyExpression
                 DTS:Name="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    x.SalesTerritoryKey
-                                FROM [dbo].[DimSalesTerritory] x
-                                    INNER JOIN dbo.DimGeography g ON x.SalesTerritoryKey = g.SalesTerritoryKey INNER JOIN dbo.DimCustomer c ON g.GeographyKey = c.GeographyKey
-                                WHERE
-                                    c.CustomerKey = " + (DT_WSTR, 12)@[$Project::CustomerID]
+                                @[User::DimSalesTerritory_LookupWhere]
                             </DTS:PropertyExpression>
               <DTS:ObjectData>
                 <pipeline
@@ -1982,18 +2141,15 @@
                           description="Specifies the SQL statement that generates the lookup table."
                           expressionType="Notify"
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
-                                    x.SalesTerritoryKey
-                                FROM [dbo].[DimSalesTerritory] x
-                                    INNER JOIN dbo.DimGeography g ON x.SalesTerritoryKey = g.SalesTerritoryKey INNER JOIN dbo.DimCustomer c ON g.GeographyKey = c.GeographyKey
-                                WHERE
-                                    c.CustomerKey = 12195</property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+x.SalesTerritoryKey
+FROM [dbo].[DimSalesTerritory] x</property>
                         <property
                           dataType="System.String"
                           description="Specifies a SQL statement that uses parameters to generate the lookup table."
                           expressionType="Notify"
                           name="SqlCommandParam"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
                                     SELECT
                                         x.SalesTerritoryKey
                                     FROM [dbo].[DimSalesTerritory] x
@@ -2145,7 +2301,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -2312,7 +2468,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
                                     SELECT 
                                         DISTINCT x.*
                                     FROM [dbo].[DimSalesTerritory] x 
@@ -2340,7 +2496,7 @@
                         <property
                           dataType="System.String"
                           description="The mappings between the parameters in the SQL command and variables."
-                          name="ParameterMapping">"0",$Project::CustomerID;</property>
+                          name="ParameterMapping">"0",User::CustomerID;</property>
                       </properties>
                       <connections>
                         <connection
@@ -2520,7 +2676,7 @@
             <DTS:PrecedenceConstraint
               DTS:refId="Package\Migrate To New Table\Migrate To New Table -2.PrecedenceConstraints[Constraint_Migrate DimProductCategory_To_Migrate DimSalesTerritory]"
               DTS:CreationName=""
-              DTS:DTSID="{24638D2B-DD42-4E07-A7AF-43E3DE4CC2A4}"
+              DTS:DTSID="{E95BC5A0-DA22-4445-B218-5D3AB6FC65BE}"
               DTS:From="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimProductCategory"
               DTS:LogicalAnd="True"
               DTS:ObjectName="Constraint_Migrate DimProductCategory_To_Migrate DimSalesTerritory"
@@ -2530,7 +2686,7 @@
         <DTS:Executable
           DTS:refId="Package\Migrate To New Table\Migrate To New Table 0"
           DTS:CreationName="STOCK:SEQUENCE"
-          DTS:DTSID="{4C06B7D5-A10A-4E25-A0B6-66FA760A6F3C}"
+          DTS:DTSID="{2BF9F617-7AD7-4080-A92E-05BCD7CAD823}"
           DTS:ExecutableType="STOCK:SEQUENCE"
           DTS:LocaleID="-1"
           DTS:ObjectName="Migrate To New Table 0">
@@ -2539,7 +2695,7 @@
             <DTS:Executable
               DTS:refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCurrency"
               DTS:CreationName="Microsoft.Pipeline"
-              DTS:DTSID="{C97DDD1C-42B3-430A-B0A2-753589E3B1D6}"
+              DTS:DTSID="{0217C440-FB07-4901-B3F0-436652CA3C4F}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
               DTS:ObjectName="Migrate DimCurrency"
@@ -2547,12 +2703,7 @@
               <DTS:Variables />
               <DTS:PropertyExpression
                 DTS:Name="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    x.CurrencyKey
-                                FROM [dbo].[DimCurrency] x
-                                    INNER JOIN dbo.FactInternetSales f ON x.CurrencyKey = f.CurrencyKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = " + (DT_WSTR, 12)@[$Project::CustomerID]
+                                @[User::DimCurrency_LookupWhere]
                             </DTS:PropertyExpression>
               <DTS:ObjectData>
                 <pipeline
@@ -2574,18 +2725,15 @@
                           description="Specifies the SQL statement that generates the lookup table."
                           expressionType="Notify"
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
-                                    x.CurrencyKey
-                                FROM [dbo].[DimCurrency] x
-                                    INNER JOIN dbo.FactInternetSales f ON x.CurrencyKey = f.CurrencyKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = 12195</property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+x.CurrencyKey
+FROM [dbo].[DimCurrency] x</property>
                         <property
                           dataType="System.String"
                           description="Specifies a SQL statement that uses parameters to generate the lookup table."
                           expressionType="Notify"
                           name="SqlCommandParam"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
                                     SELECT
                                         x.CurrencyKey
                                     FROM [dbo].[DimCurrency] x
@@ -2737,7 +2885,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -2872,7 +3020,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
                                     SELECT 
                                         DISTINCT x.*
                                     FROM [dbo].[DimCurrency] x 
@@ -2900,7 +3048,7 @@
                         <property
                           dataType="System.String"
                           description="The mappings between the parameters in the SQL command and variables."
-                          name="ParameterMapping">"0",$Project::CustomerID;</property>
+                          name="ParameterMapping">"0",User::CustomerID;</property>
                       </properties>
                       <connections>
                         <connection
@@ -3021,7 +3169,7 @@
             <DTS:Executable
               DTS:refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCustomer"
               DTS:CreationName="Microsoft.Pipeline"
-              DTS:DTSID="{00489E8B-38DC-4F94-BC31-317E27B7A163}"
+              DTS:DTSID="{835EF576-65D3-41C2-8273-6F3393A79814}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
               DTS:ObjectName="Migrate DimCustomer"
@@ -3029,12 +3177,7 @@
               <DTS:Variables />
               <DTS:PropertyExpression
                 DTS:Name="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    x.CustomerKey
-                                FROM [dbo].[DimCustomer] x
-                                    
-                                WHERE
-                                    x.CustomerKey = " + (DT_WSTR, 12)@[$Project::CustomerID]
+                                @[User::DimCustomer_LookupWhere]
                             </DTS:PropertyExpression>
               <DTS:ObjectData>
                 <pipeline
@@ -3056,18 +3199,15 @@
                           description="Specifies the SQL statement that generates the lookup table."
                           expressionType="Notify"
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
-                                    x.CustomerKey
-                                FROM [dbo].[DimCustomer] x
-                                    
-                                WHERE
-                                    x.CustomerKey = 12195</property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+x.CustomerKey
+FROM [dbo].[DimCustomer] x</property>
                         <property
                           dataType="System.String"
                           description="Specifies a SQL statement that uses parameters to generate the lookup table."
                           expressionType="Notify"
                           name="SqlCommandParam"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
                                     SELECT
                                         x.CustomerKey
                                     FROM [dbo].[DimCustomer] x
@@ -3219,7 +3359,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -3650,7 +3790,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
                                     SELECT 
                                         DISTINCT x.*
                                     FROM [dbo].[DimCustomer] x 
@@ -3678,7 +3818,7 @@
                         <property
                           dataType="System.String"
                           description="The mappings between the parameters in the SQL command and variables."
-                          name="ParameterMapping">"0",$Project::CustomerID;</property>
+                          name="ParameterMapping">"0",User::CustomerID;</property>
                       </properties>
                       <connections>
                         <connection
@@ -4321,7 +4461,7 @@
             <DTS:Executable
               DTS:refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimDate"
               DTS:CreationName="Microsoft.Pipeline"
-              DTS:DTSID="{6B2A7E31-61C7-4581-927A-57A347A6C1F1}"
+              DTS:DTSID="{8D127938-8688-4D29-8910-5D5E1AECF9B8}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
               DTS:ObjectName="Migrate DimDate"
@@ -4329,12 +4469,7 @@
               <DTS:Variables />
               <DTS:PropertyExpression
                 DTS:Name="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    x.DateKey
-                                FROM [dbo].[DimDate] x
-                                    
-                                WHERE
-                                    1 = 1 "
+                                @[User::DimDate_LookupWhere]
                             </DTS:PropertyExpression>
               <DTS:ObjectData>
                 <pipeline
@@ -4356,18 +4491,15 @@
                           description="Specifies the SQL statement that generates the lookup table."
                           expressionType="Notify"
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
-                                    x.DateKey
-                                FROM [dbo].[DimDate] x
-                                    
-                                WHERE
-                                    1 = 1 </property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+x.DateKey
+FROM [dbo].[DimDate] x</property>
                         <property
                           dataType="System.String"
                           description="Specifies a SQL statement that uses parameters to generate the lookup table."
                           expressionType="Notify"
                           name="SqlCommandParam"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
                                     SELECT
                                         x.DateKey
                                     FROM [dbo].[DimDate] x
@@ -4519,7 +4651,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -4822,7 +4954,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
                                     SELECT 
                                         DISTINCT x.*
                                     FROM [dbo].[DimDate] x 
@@ -4850,7 +4982,7 @@
                         <property
                           dataType="System.String"
                           description="The mappings between the parameters in the SQL command and variables."
-                          name="ParameterMapping">"0",$Project::CustomerID;</property>
+                          name="ParameterMapping">"0",User::CustomerID;</property>
                       </properties>
                       <connections>
                         <connection
@@ -5271,7 +5403,7 @@
             <DTS:Executable
               DTS:refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimProduct"
               DTS:CreationName="Microsoft.Pipeline"
-              DTS:DTSID="{05C61326-E303-4A4D-9712-2D976C0E0B0A}"
+              DTS:DTSID="{0605FEAB-C3ED-4DFC-85A9-F8476C1D77DC}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
               DTS:ObjectName="Migrate DimProduct"
@@ -5279,12 +5411,7 @@
               <DTS:Variables />
               <DTS:PropertyExpression
                 DTS:Name="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    x.ProductKey
-                                FROM [dbo].[DimProduct] x
-                                    INNER JOIN dbo.FactInternetSales f ON x.ProductKey = f.ProductKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = " + (DT_WSTR, 12)@[$Project::CustomerID]
+                                @[User::DimProduct_LookupWhere]
                             </DTS:PropertyExpression>
               <DTS:ObjectData>
                 <pipeline
@@ -5306,18 +5433,15 @@
                           description="Specifies the SQL statement that generates the lookup table."
                           expressionType="Notify"
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
-                                    x.ProductKey
-                                FROM [dbo].[DimProduct] x
-                                    INNER JOIN dbo.FactInternetSales f ON x.ProductKey = f.ProductKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = 12195</property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+x.ProductKey
+FROM [dbo].[DimProduct] x</property>
                         <property
                           dataType="System.String"
                           description="Specifies a SQL statement that uses parameters to generate the lookup table."
                           expressionType="Notify"
                           name="SqlCommandParam"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
                                     SELECT
                                         x.ProductKey
                                     FROM [dbo].[DimProduct] x
@@ -5469,7 +5593,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -5976,7 +6100,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
                                     SELECT 
                                         DISTINCT x.*
                                     FROM [dbo].[DimProduct] x 
@@ -6004,7 +6128,7 @@
                         <property
                           dataType="System.String"
                           description="The mappings between the parameters in the SQL command and variables."
-                          name="ParameterMapping">"0",$Project::CustomerID;</property>
+                          name="ParameterMapping">"0",User::CustomerID;</property>
                       </properties>
                       <connections>
                         <connection
@@ -6782,7 +6906,7 @@
             <DTS:Executable
               DTS:refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimPromotion"
               DTS:CreationName="Microsoft.Pipeline"
-              DTS:DTSID="{34E79ECA-5F81-4D51-9319-7D072AAF9D40}"
+              DTS:DTSID="{85ED8E38-B304-4818-A431-C43645A82AA2}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
               DTS:ObjectName="Migrate DimPromotion"
@@ -6790,12 +6914,7 @@
               <DTS:Variables />
               <DTS:PropertyExpression
                 DTS:Name="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    x.PromotionKey
-                                FROM [dbo].[DimPromotion] x
-                                    INNER JOIN dbo.FactInternetSales f ON x.PromotionKey = f.PromotionKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = " + (DT_WSTR, 12)@[$Project::CustomerID]
+                                @[User::DimPromotion_LookupWhere]
                             </DTS:PropertyExpression>
               <DTS:ObjectData>
                 <pipeline
@@ -6817,18 +6936,15 @@
                           description="Specifies the SQL statement that generates the lookup table."
                           expressionType="Notify"
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
-                                    x.PromotionKey
-                                FROM [dbo].[DimPromotion] x
-                                    INNER JOIN dbo.FactInternetSales f ON x.PromotionKey = f.PromotionKey INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = 12195</property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+x.PromotionKey
+FROM [dbo].[DimPromotion] x</property>
                         <property
                           dataType="System.String"
                           description="Specifies a SQL statement that uses parameters to generate the lookup table."
                           expressionType="Notify"
                           name="SqlCommandParam"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
                                     SELECT
                                         x.PromotionKey
                                     FROM [dbo].[DimPromotion] x
@@ -6980,7 +7096,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -7259,7 +7375,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
                                     SELECT 
                                         DISTINCT x.*
                                     FROM [dbo].[DimPromotion] x 
@@ -7287,7 +7403,7 @@
                         <property
                           dataType="System.String"
                           description="The mappings between the parameters in the SQL command and variables."
-                          name="ParameterMapping">"0",$Project::CustomerID;</property>
+                          name="ParameterMapping">"0",User::CustomerID;</property>
                       </properties>
                       <connections>
                         <connection
@@ -7660,55 +7776,10 @@
                 </pipeline>
               </DTS:ObjectData>
             </DTS:Executable>
-          </DTS:Executables>
-          <DTS:PrecedenceConstraints>
-            <DTS:PrecedenceConstraint
-              DTS:refId="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimCurrency_To_Migrate DimCustomer]"
-              DTS:CreationName=""
-              DTS:DTSID="{492762C6-F9D5-4CE3-8B3C-8C8704F8BB4A}"
-              DTS:From="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCurrency"
-              DTS:LogicalAnd="True"
-              DTS:ObjectName="Constraint_Migrate DimCurrency_To_Migrate DimCustomer"
-              DTS:To="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCustomer" />
-            <DTS:PrecedenceConstraint
-              DTS:refId="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimCustomer_To_Migrate DimDate]"
-              DTS:CreationName=""
-              DTS:DTSID="{40A6DFBF-D8E5-4A00-9457-6A858A067838}"
-              DTS:From="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCustomer"
-              DTS:LogicalAnd="True"
-              DTS:ObjectName="Constraint_Migrate DimCustomer_To_Migrate DimDate"
-              DTS:To="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimDate" />
-            <DTS:PrecedenceConstraint
-              DTS:refId="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimDate_To_Migrate DimProduct]"
-              DTS:CreationName=""
-              DTS:DTSID="{653BDDD4-ACED-4F87-BFE0-1ABD19E350FA}"
-              DTS:From="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimDate"
-              DTS:LogicalAnd="True"
-              DTS:ObjectName="Constraint_Migrate DimDate_To_Migrate DimProduct"
-              DTS:To="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimProduct" />
-            <DTS:PrecedenceConstraint
-              DTS:refId="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimProduct_To_Migrate DimPromotion]"
-              DTS:CreationName=""
-              DTS:DTSID="{7033F901-5ADE-4CB0-A666-11B259A054DD}"
-              DTS:From="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimProduct"
-              DTS:LogicalAnd="True"
-              DTS:ObjectName="Constraint_Migrate DimProduct_To_Migrate DimPromotion"
-              DTS:To="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimPromotion" />
-          </DTS:PrecedenceConstraints>
-        </DTS:Executable>
-        <DTS:Executable
-          DTS:refId="Package\Migrate To New Table\Migrate To New Table 1"
-          DTS:CreationName="STOCK:SEQUENCE"
-          DTS:DTSID="{21946D96-0505-4EE2-AA35-75AFD65DB310}"
-          DTS:ExecutableType="STOCK:SEQUENCE"
-          DTS:LocaleID="-1"
-          DTS:ObjectName="Migrate To New Table 1">
-          <DTS:Variables />
-          <DTS:Executables>
             <DTS:Executable
-              DTS:refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason"
+              DTS:refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason"
               DTS:CreationName="Microsoft.Pipeline"
-              DTS:DTSID="{6B5F6BA8-F248-4639-9898-41BBA4E8C99D}"
+              DTS:DTSID="{AB6FD6B6-E6CA-4C45-A6F0-8728F8D44E6B}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
               DTS:ObjectName="Migrate DimSalesReason"
@@ -7716,12 +7787,7 @@
               <DTS:Variables />
               <DTS:PropertyExpression
                 DTS:Name="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    x.SalesReasonKey
-                                FROM [dbo].[DimSalesReason] x
-                                    INNER JOIN dbo.FactInternetSalesReason fsr ON x.SalesReasonKey = fsr.SalesReasonKey INNER JOIN dbo.FactInternetSales f ON fsr.SalesOrderNumber = f.SalesOrderNumber AND fsr.SalesOrderLineNumber = f.SalesOrderLineNumber INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = " + (DT_WSTR, 12)@[$Project::CustomerID]
+                                @[User::DimSalesReason_LookupWhere]
                             </DTS:PropertyExpression>
               <DTS:ObjectData>
                 <pipeline
@@ -7731,7 +7797,7 @@
                   version="1">
                   <components>
                     <component
-                      refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup"
+                      refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup"
                       componentClassID="Microsoft.Lookup"
                       contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
                       name="Lookup"
@@ -7743,18 +7809,15 @@
                           description="Specifies the SQL statement that generates the lookup table."
                           expressionType="Notify"
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
-                                    x.SalesReasonKey
-                                FROM [dbo].[DimSalesReason] x
-                                    INNER JOIN dbo.FactInternetSalesReason fsr ON x.SalesReasonKey = fsr.SalesReasonKey INNER JOIN dbo.FactInternetSales f ON fsr.SalesOrderNumber = f.SalesOrderNumber AND fsr.SalesOrderLineNumber = f.SalesOrderLineNumber INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = 12195</property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+x.SalesReasonKey
+FROM [dbo].[DimSalesReason] x</property>
                         <property
                           dataType="System.String"
                           description="Specifies a SQL statement that uses parameters to generate the lookup table."
                           expressionType="Notify"
                           name="SqlCommandParam"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
                                     SELECT
                                         x.SalesReasonKey
                                     FROM [dbo].[DimSalesReason] x
@@ -7798,7 +7861,7 @@
                           containsID="true"
                           dataType="System.String"
                           description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                          name="ParameterMap">#{Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonKey]};</property>
+                          name="ParameterMap">#{Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonKey]};</property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -7810,7 +7873,7 @@
                       </properties>
                       <connections>
                         <connection
-                          refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Connections[OleDbConnection]"
+                          refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Connections[OleDbConnection]"
                           connectionManagerID="Package.ConnectionManagers[NewWarehouseNode]"
                           connectionManagerRefId="Package.ConnectionManagers[NewWarehouseNode]"
                           description="Connection manager used to access lookup data."
@@ -7818,14 +7881,14 @@
                       </connections>
                       <inputs>
                         <input
-                          refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Inputs[Old Node_Output_Lookup]"
+                          refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Inputs[Old Node_Output_Lookup]"
                           name="Old Node_Output_Lookup">
                           <inputColumns>
                             <inputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Inputs[Old Node_Output_Lookup].Columns[SalesReasonKey]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Inputs[Old Node_Output_Lookup].Columns[SalesReasonKey]"
                               cachedDataType="i4"
                               cachedName="SalesReasonKey"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonKey]">
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonKey]">
                               <properties>
                                 <property
                                   dataType="System.String"
@@ -7843,38 +7906,38 @@
                       </inputs>
                       <outputs>
                         <output
-                          refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Outputs[Match]"
+                          refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Outputs[Match]"
                           errorOrTruncationOperation="Lookup"
                           exclusionGroup="1"
                           name="Match"
-                          synchronousInputId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Inputs[Old Node_Output_Lookup]">
+                          synchronousInputId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Inputs[Old Node_Output_Lookup]">
                           <externalMetadataColumns />
                         </output>
                         <output
-                          refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Outputs[NoMatch]"
+                          refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Outputs[NoMatch]"
                           description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
                           exclusionGroup="1"
                           name="NoMatch"
-                          synchronousInputId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Inputs[Old Node_Output_Lookup]">
+                          synchronousInputId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Inputs[Old Node_Output_Lookup]">
                           <externalMetadataColumns />
                         </output>
                         <output
-                          refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Outputs[Error]"
+                          refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Outputs[Error]"
                           exclusionGroup="1"
                           isErrorOut="true"
                           name="Error"
-                          synchronousInputId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Inputs[Old Node_Output_Lookup]">
+                          synchronousInputId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Inputs[Old Node_Output_Lookup]">
                           <outputColumns>
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Outputs[Error].Columns[ErrorCode]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Outputs[Error].Columns[ErrorCode]"
                               dataType="i4"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Outputs[Error].Columns[ErrorCode]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Outputs[Error].Columns[ErrorCode]"
                               name="ErrorCode"
                               specialFlags="1" />
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Outputs[Error].Columns[ErrorColumn]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Outputs[Error].Columns[ErrorColumn]"
                               dataType="i4"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Outputs[Error].Columns[ErrorColumn]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Outputs[Error].Columns[ErrorColumn]"
                               name="ErrorColumn"
                               specialFlags="2" />
                           </outputColumns>
@@ -7883,7 +7946,7 @@
                       </outputs>
                     </component>
                     <component
-                      refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node"
+                      refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node"
                       componentClassID="Microsoft.OLEDBDestination"
                       contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
                       name="New Node"
@@ -7906,7 +7969,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -7938,7 +8001,7 @@
                       </properties>
                       <connections>
                         <connection
-                          refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Connections[OleDbConnection]"
+                          refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Connections[OleDbConnection]"
                           connectionManagerID="Package.ConnectionManagers[NewWarehouseNode]"
                           connectionManagerRefId="Package.ConnectionManagers[NewWarehouseNode]"
                           description="The OLE DB runtime connection used to access the database."
@@ -7946,56 +8009,56 @@
                       </connections>
                       <inputs>
                         <input
-                          refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node]"
+                          refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node]"
                           errorOrTruncationOperation="Insert"
                           errorRowDisposition="FailComponent"
                           hasSideEffects="true"
                           name="Lookup_NoMatch_New Node">
                           <inputColumns>
                             <inputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].Columns[SalesReasonKey]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].Columns[SalesReasonKey]"
                               cachedDataType="i4"
                               cachedName="SalesReasonKey"
-                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonKey]"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonKey]" />
+                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonKey]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonKey]" />
                             <inputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].Columns[SalesReasonAlternateKey]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].Columns[SalesReasonAlternateKey]"
                               cachedDataType="i4"
                               cachedName="SalesReasonAlternateKey"
-                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonAlternateKey]"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonAlternateKey]" />
+                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonAlternateKey]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonAlternateKey]" />
                             <inputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].Columns[SalesReasonName]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].Columns[SalesReasonName]"
                               cachedDataType="wstr"
                               cachedLength="50"
                               cachedName="SalesReasonName"
-                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonName]"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonName]" />
+                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonName]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonName]" />
                             <inputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].Columns[SalesReasonReasonType]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].Columns[SalesReasonReasonType]"
                               cachedDataType="wstr"
                               cachedLength="50"
                               cachedName="SalesReasonReasonType"
-                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonReasonType]"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonReasonType]" />
+                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonReasonType]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonReasonType]" />
                           </inputColumns>
                           <externalMetadataColumns
                             isUsed="True">
                             <externalMetadataColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonKey]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonKey]"
                               dataType="i4"
                               name="SalesReasonKey" />
                             <externalMetadataColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonAlternateKey]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonAlternateKey]"
                               dataType="i4"
                               name="SalesReasonAlternateKey" />
                             <externalMetadataColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonName]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonName]"
                               dataType="wstr"
                               length="50"
                               name="SalesReasonName" />
                             <externalMetadataColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonReasonType]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node].ExternalColumns[SalesReasonReasonType]"
                               dataType="wstr"
                               length="50"
                               name="SalesReasonReasonType" />
@@ -8004,22 +8067,22 @@
                       </inputs>
                       <outputs>
                         <output
-                          refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Outputs[Error]"
+                          refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Outputs[Error]"
                           exclusionGroup="1"
                           isErrorOut="true"
                           name="Error"
-                          synchronousInputId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node]">
+                          synchronousInputId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node]">
                           <outputColumns>
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Outputs[Error].Columns[ErrorCode]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Outputs[Error].Columns[ErrorCode]"
                               dataType="i4"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Outputs[Error].Columns[ErrorCode]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Outputs[Error].Columns[ErrorCode]"
                               name="ErrorCode"
                               specialFlags="1" />
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Outputs[Error].Columns[ErrorColumn]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Outputs[Error].Columns[ErrorColumn]"
                               dataType="i4"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Outputs[Error].Columns[ErrorColumn]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Outputs[Error].Columns[ErrorColumn]"
                               name="ErrorColumn"
                               specialFlags="2" />
                           </outputColumns>
@@ -8028,7 +8091,7 @@
                       </outputs>
                     </component>
                     <component
-                      refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node"
+                      refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node"
                       componentClassID="Microsoft.OLEDBSource"
                       contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
                       name="Old Node"
@@ -8051,7 +8114,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
                                     SELECT 
                                         DISTINCT x.*
                                     FROM [dbo].[DimSalesReason] x 
@@ -8079,11 +8142,11 @@
                         <property
                           dataType="System.String"
                           description="The mappings between the parameters in the SQL command and variables."
-                          name="ParameterMapping">"0",$Project::CustomerID;</property>
+                          name="ParameterMapping">"0",User::CustomerID;</property>
                       </properties>
                       <connections>
                         <connection
-                          refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Connections[OleDbConnection]"
+                          refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Connections[OleDbConnection]"
                           connectionManagerID="Package.ConnectionManagers[OldWarehouseNode]"
                           connectionManagerRefId="Package.ConnectionManagers[OldWarehouseNode]"
                           description="The OLE DB runtime connection used to access the database."
@@ -8091,107 +8154,107 @@
                       </connections>
                       <outputs>
                         <output
-                          refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output]"
+                          refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output]"
                           name="Output">
                           <outputColumns>
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonKey]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonKey]"
                               dataType="i4"
                               errorOrTruncationOperation="Conversion"
                               errorRowDisposition="FailComponent"
-                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonKey]"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonKey]"
+                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonKey]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonKey]"
                               name="SalesReasonKey"
                               truncationRowDisposition="FailComponent" />
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonAlternateKey]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonAlternateKey]"
                               dataType="i4"
                               errorOrTruncationOperation="Conversion"
                               errorRowDisposition="FailComponent"
-                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonAlternateKey]"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonAlternateKey]"
+                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonAlternateKey]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonAlternateKey]"
                               name="SalesReasonAlternateKey"
                               truncationRowDisposition="FailComponent" />
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonName]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonName]"
                               dataType="wstr"
                               errorOrTruncationOperation="Conversion"
                               errorRowDisposition="FailComponent"
-                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonName]"
+                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonName]"
                               length="50"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonName]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonName]"
                               name="SalesReasonName"
                               truncationRowDisposition="FailComponent" />
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonReasonType]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonReasonType]"
                               dataType="wstr"
                               errorOrTruncationOperation="Conversion"
                               errorRowDisposition="FailComponent"
-                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonReasonType]"
+                              externalMetadataColumnId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonReasonType]"
                               length="50"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonReasonType]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].Columns[SalesReasonReasonType]"
                               name="SalesReasonReasonType"
                               truncationRowDisposition="FailComponent" />
                           </outputColumns>
                           <externalMetadataColumns
                             isUsed="True">
                             <externalMetadataColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonKey]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonKey]"
                               dataType="i4"
                               name="SalesReasonKey" />
                             <externalMetadataColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonAlternateKey]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonAlternateKey]"
                               dataType="i4"
                               name="SalesReasonAlternateKey" />
                             <externalMetadataColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonName]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonName]"
                               dataType="wstr"
                               length="50"
                               name="SalesReasonName" />
                             <externalMetadataColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonReasonType]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output].ExternalColumns[SalesReasonReasonType]"
                               dataType="wstr"
                               length="50"
                               name="SalesReasonReasonType" />
                           </externalMetadataColumns>
                         </output>
                         <output
-                          refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Error]"
+                          refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Error]"
                           isErrorOut="true"
                           name="Error">
                           <outputColumns>
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonKey]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonKey]"
                               dataType="i4"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonKey]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonKey]"
                               name="SalesReasonKey" />
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonAlternateKey]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonAlternateKey]"
                               dataType="i4"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonAlternateKey]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonAlternateKey]"
                               name="SalesReasonAlternateKey" />
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonName]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonName]"
                               dataType="wstr"
                               length="50"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonName]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonName]"
                               name="SalesReasonName" />
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonReasonType]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonReasonType]"
                               dataType="wstr"
                               length="50"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonReasonType]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[SalesReasonReasonType]"
                               name="SalesReasonReasonType" />
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[ErrorCode]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[ErrorCode]"
                               dataType="i4"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[ErrorCode]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[ErrorCode]"
                               name="ErrorCode"
                               specialFlags="1" />
                             <outputColumn
-                              refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[ErrorColumn]"
+                              refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[ErrorColumn]"
                               dataType="i4"
-                              lineageId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[ErrorColumn]"
+                              lineageId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Error].Columns[ErrorColumn]"
                               name="ErrorColumn"
                               specialFlags="2" />
                           </outputColumns>
@@ -8202,23 +8265,76 @@
                   </components>
                   <paths>
                     <path
-                      refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason.Paths[Lookup_NoMatch_New Node]"
-                      endId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node]"
+                      refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason.Paths[Lookup_NoMatch_New Node]"
+                      endId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node.Inputs[Lookup_NoMatch_New Node]"
                       name="Lookup_NoMatch_New Node"
-                      startId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Outputs[NoMatch]" />
+                      startId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Outputs[NoMatch]" />
                     <path
-                      refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason.Paths[Old Node_Output_Lookup]"
-                      endId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Lookup.Inputs[Old Node_Output_Lookup]"
+                      refId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason.Paths[Old Node_Output_Lookup]"
+                      endId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup.Inputs[Old Node_Output_Lookup]"
                       name="Old Node_Output_Lookup"
-                      startId="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason\Old Node.Outputs[Output]" />
+                      startId="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node.Outputs[Output]" />
                   </paths>
                 </pipeline>
               </DTS:ObjectData>
             </DTS:Executable>
+          </DTS:Executables>
+          <DTS:PrecedenceConstraints>
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimCurrency_To_Migrate DimCustomer]"
+              DTS:CreationName=""
+              DTS:DTSID="{AE58A270-105E-4922-AE9E-BFB9D3286B3C}"
+              DTS:From="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCurrency"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint_Migrate DimCurrency_To_Migrate DimCustomer"
+              DTS:To="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCustomer" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimCustomer_To_Migrate DimDate]"
+              DTS:CreationName=""
+              DTS:DTSID="{2A9C9A90-7BB9-4E68-B90D-87636F5B0794}"
+              DTS:From="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCustomer"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint_Migrate DimCustomer_To_Migrate DimDate"
+              DTS:To="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimDate" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimDate_To_Migrate DimProduct]"
+              DTS:CreationName=""
+              DTS:DTSID="{AA1B4FC6-936D-43CE-BD56-B11F5C50CA2C}"
+              DTS:From="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimDate"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint_Migrate DimDate_To_Migrate DimProduct"
+              DTS:To="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimProduct" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimProduct_To_Migrate DimPromotion]"
+              DTS:CreationName=""
+              DTS:DTSID="{35DDE578-3441-463E-A2F2-840C1D450556}"
+              DTS:From="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimProduct"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint_Migrate DimProduct_To_Migrate DimPromotion"
+              DTS:To="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimPromotion" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimPromotion_To_Migrate DimSalesReason]"
+              DTS:CreationName=""
+              DTS:DTSID="{63BF9170-1098-498B-8809-90D9485804A8}"
+              DTS:From="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimPromotion"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint_Migrate DimPromotion_To_Migrate DimSalesReason"
+              DTS:To="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason" />
+          </DTS:PrecedenceConstraints>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Migrate To New Table\Migrate To New Table 1"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:DTSID="{F9498914-9DD6-459E-8412-2BC705689B8B}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Migrate To New Table 1">
+          <DTS:Variables />
+          <DTS:Executables>
             <DTS:Executable
               DTS:refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactInternetSales"
               DTS:CreationName="Microsoft.Pipeline"
-              DTS:DTSID="{11C9932E-A4CB-48BA-A0A0-5EC8BFA32E1D}"
+              DTS:DTSID="{88C8649E-E3BC-4067-A11D-674704EE253C}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
               DTS:ObjectName="Migrate FactInternetSales"
@@ -8226,12 +8342,7 @@
               <DTS:Variables />
               <DTS:PropertyExpression
                 DTS:Name="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    x.SalesOrderNumber, x.SalesOrderLineNumber
-                                FROM [dbo].[FactInternetSales] x
-                                    INNER JOIN dbo.DimCustomer c ON x.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = " + (DT_WSTR, 12)@[$Project::CustomerID]
+                                @[User::FactInternetSales_LookupWhere]
                             </DTS:PropertyExpression>
               <DTS:ObjectData>
                 <pipeline
@@ -8253,18 +8364,18 @@
                           description="Specifies the SQL statement that generates the lookup table."
                           expressionType="Notify"
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
-                                    x.SalesOrderNumber, x.SalesOrderLineNumber
-                                FROM [dbo].[FactInternetSales] x
-                                    INNER JOIN dbo.DimCustomer c ON x.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = 12195</property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+    x.SalesOrderNumber, x.SalesOrderLineNumber
+FROM [dbo].[FactInternetSales] x
+    INNER JOIN dbo.DimCustomer c ON x.CustomerKey = c.CustomerKey
+WHERE
+    c.CustomerKey =  12194</property>
                         <property
                           dataType="System.String"
                           description="Specifies a SQL statement that uses parameters to generate the lookup table."
                           expressionType="Notify"
                           name="SqlCommandParam"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
                                     SELECT
                                         x.SalesOrderNumber, x.SalesOrderLineNumber
                                     FROM [dbo].[FactInternetSales] x
@@ -8301,7 +8412,7 @@
                           description="Indicates whether to reference metadata in an XML format."
                           name="ReferenceMetadataXml">&lt;referenceMetadata&gt;
   &lt;referenceColumns&gt;
-    &lt;referenceColumn name="SalesOrderNumber" dataType="DT_WSTR" length="20" precision="-1" scale="-1" codePage="0" /&gt;
+    &lt;referenceColumn name="SalesOrderNumber" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0" /&gt;
     &lt;referenceColumn name="SalesOrderLineNumber" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0" /&gt;
   &lt;/referenceColumns&gt;
 &lt;/referenceMetadata&gt;</property>
@@ -8434,7 +8545,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -8801,7 +8912,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
                                     SELECT 
                                         DISTINCT x.*
                                     FROM [dbo].[FactInternetSales] x 
@@ -8829,7 +8940,7 @@
                         <property
                           dataType="System.String"
                           description="The mappings between the parameters in the SQL command and variables."
-                          name="ParameterMapping">"0",$Project::CustomerID;</property>
+                          name="ParameterMapping">"0",User::CustomerID;</property>
                       </properties>
                       <connections>
                         <connection
@@ -9367,7 +9478,7 @@
             <DTS:Executable
               DTS:refId="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactSurveyResponse"
               DTS:CreationName="Microsoft.Pipeline"
-              DTS:DTSID="{F1335D86-ACC6-4D07-A65F-EC6D69FA210E}"
+              DTS:DTSID="{8BA87475-BD9A-47F3-B045-6CD12DD693BB}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
               DTS:ObjectName="Migrate FactSurveyResponse"
@@ -9375,12 +9486,7 @@
               <DTS:Variables />
               <DTS:PropertyExpression
                 DTS:Name="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    x.SurveyResponseKey
-                                FROM [dbo].[FactSurveyResponse] x
-                                    INNER JOIN dbo.DimCustomer c ON x.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = " + (DT_WSTR, 12)@[$Project::CustomerID]
+                                @[User::FactSurveyResponse_LookupWhere]
                             </DTS:PropertyExpression>
               <DTS:ObjectData>
                 <pipeline
@@ -9402,18 +9508,18 @@
                           description="Specifies the SQL statement that generates the lookup table."
                           expressionType="Notify"
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
-                                    x.SurveyResponseKey
-                                FROM [dbo].[FactSurveyResponse] x
-                                    INNER JOIN dbo.DimCustomer c ON x.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = 12195</property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+    x.SurveyResponseKey
+FROM [dbo].[FactSurveyResponse] x
+    INNER JOIN dbo.DimCustomer c ON x.CustomerKey = c.CustomerKey
+WHERE
+    c.CustomerKey =  12194</property>
                         <property
                           dataType="System.String"
                           description="Specifies a SQL statement that uses parameters to generate the lookup table."
                           expressionType="Notify"
                           name="SqlCommandParam"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
                                     SELECT
                                         x.SurveyResponseKey
                                     FROM [dbo].[FactSurveyResponse] x
@@ -9565,7 +9671,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -9750,7 +9856,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
                                     SELECT 
                                         DISTINCT x.*
                                     FROM [dbo].[FactSurveyResponse] x 
@@ -9778,7 +9884,7 @@
                         <property
                           dataType="System.String"
                           description="The mappings between the parameters in the SQL command and variables."
-                          name="ParameterMapping">"0",$Project::CustomerID;</property>
+                          name="ParameterMapping">"0",User::CustomerID;</property>
                       </properties>
                       <connections>
                         <connection
@@ -9989,17 +10095,9 @@
           </DTS:Executables>
           <DTS:PrecedenceConstraints>
             <DTS:PrecedenceConstraint
-              DTS:refId="Package\Migrate To New Table\Migrate To New Table 1.PrecedenceConstraints[Constraint_Migrate DimSalesReason_To_Migrate FactInternetSales]"
-              DTS:CreationName=""
-              DTS:DTSID="{5D8E7702-A0A7-4AE8-8102-1EB5FFB07CCC}"
-              DTS:From="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason"
-              DTS:LogicalAnd="True"
-              DTS:ObjectName="Constraint_Migrate DimSalesReason_To_Migrate FactInternetSales"
-              DTS:To="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactInternetSales" />
-            <DTS:PrecedenceConstraint
               DTS:refId="Package\Migrate To New Table\Migrate To New Table 1.PrecedenceConstraints[Constraint_Migrate FactInternetSales_To_Migrate FactSurveyResponse]"
               DTS:CreationName=""
-              DTS:DTSID="{DC05926C-5ED2-4CA2-A2BD-D4386179CB38}"
+              DTS:DTSID="{6C01961D-563E-4AFF-857A-0FAD2AA0540A}"
               DTS:From="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactInternetSales"
               DTS:LogicalAnd="True"
               DTS:ObjectName="Constraint_Migrate FactInternetSales_To_Migrate FactSurveyResponse"
@@ -10009,7 +10107,7 @@
         <DTS:Executable
           DTS:refId="Package\Migrate To New Table\Migrate To New Table 2"
           DTS:CreationName="STOCK:SEQUENCE"
-          DTS:DTSID="{1B5AD34B-38F1-4C90-93B1-6B7D709F2410}"
+          DTS:DTSID="{0728B7E3-A696-484D-B9EF-6C31BB844802}"
           DTS:ExecutableType="STOCK:SEQUENCE"
           DTS:LocaleID="-1"
           DTS:ObjectName="Migrate To New Table 2">
@@ -10018,7 +10116,7 @@
             <DTS:Executable
               DTS:refId="Package\Migrate To New Table\Migrate To New Table 2\Migrate FactInternetSalesReason"
               DTS:CreationName="Microsoft.Pipeline"
-              DTS:DTSID="{52028A48-EE0F-4C74-B918-3DF035F465CB}"
+              DTS:DTSID="{703D8369-5299-4868-8155-49DF9D741175}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
               DTS:ObjectName="Migrate FactInternetSalesReason"
@@ -10026,12 +10124,7 @@
               <DTS:Variables />
               <DTS:PropertyExpression
                 DTS:Name="[Lookup].[SqlCommand]">
-                                "SELECT DISTINCT
-                                    x.SalesOrderNumber, x.SalesOrderLineNumber, x.SalesReasonKey
-                                FROM [dbo].[FactInternetSalesReason] x
-                                    INNER JOIN dbo.FactInternetSales f ON x.SalesOrderNumber = f.SalesOrderNumber AND x.SalesOrderLineNumber = f.SalesOrderLineNumber INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = " + (DT_WSTR, 12)@[$Project::CustomerID]
+                                @[User::FactInternetSalesReason_LookupWhere]
                             </DTS:PropertyExpression>
               <DTS:ObjectData>
                 <pipeline
@@ -10053,18 +10146,18 @@
                           description="Specifies the SQL statement that generates the lookup table."
                           expressionType="Notify"
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
-                                    x.SalesOrderNumber, x.SalesOrderLineNumber, x.SalesReasonKey
-                                FROM [dbo].[FactInternetSalesReason] x
-                                    INNER JOIN dbo.FactInternetSales f ON x.SalesOrderNumber = f.SalesOrderNumber AND x.SalesOrderLineNumber = f.SalesOrderLineNumber INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
-                                WHERE
-                                    c.CustomerKey = 12195</property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT
+    x.SalesOrderNumber, x.SalesOrderLineNumber, x.SalesReasonKey
+FROM [dbo].[FactInternetSalesReason] x
+    INNER JOIN dbo.FactInternetSales f ON x.SalesOrderNumber = f.SalesOrderNumber AND x.SalesOrderLineNumber = f.SalesOrderLineNumber INNER JOIN dbo.DimCustomer c ON f.CustomerKey = c.CustomerKey
+WHERE
+    c.CustomerKey =  12194</property>
                         <property
                           dataType="System.String"
                           description="Specifies a SQL statement that uses parameters to generate the lookup table."
                           expressionType="Notify"
                           name="SqlCommandParam"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (
                                     SELECT
                                         x.SalesOrderNumber, x.SalesOrderLineNumber, x.SalesReasonKey
                                     FROM [dbo].[FactInternetSalesReason] x
@@ -10101,7 +10194,7 @@
                           description="Indicates whether to reference metadata in an XML format."
                           name="ReferenceMetadataXml">&lt;referenceMetadata&gt;
   &lt;referenceColumns&gt;
-    &lt;referenceColumn name="SalesOrderNumber" dataType="DT_WSTR" length="20" precision="-1" scale="-1" codePage="0" /&gt;
+    &lt;referenceColumn name="SalesOrderNumber" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0" /&gt;
     &lt;referenceColumn name="SalesOrderLineNumber" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0" /&gt;
     &lt;referenceColumn name="SalesReasonKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0" /&gt;
   &lt;/referenceColumns&gt;
@@ -10251,7 +10344,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                         <property
                           dataType="System.Int32"
                           description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -10384,7 +10477,7 @@
                           dataType="System.String"
                           description="The SQL command to be executed."
                           name="SqlCommand"
-                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+                          UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
                                     SELECT 
                                         DISTINCT x.*
                                     FROM [dbo].[FactInternetSalesReason] x 
@@ -10412,7 +10505,7 @@
                         <property
                           dataType="System.String"
                           description="The mappings between the parameters in the SQL command and variables."
-                          name="ParameterMapping">"0",$Project::CustomerID;</property>
+                          name="ParameterMapping">"0",User::CustomerID;</property>
                       </properties>
                       <connections>
                         <connection
@@ -10534,7 +10627,7 @@
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Migrate To New Table.PrecedenceConstraints[Constraint_Migrate To New Table -1_To_Migrate To New Table 0]"
           DTS:CreationName=""
-          DTS:DTSID="{030E6AFE-4F32-4D72-B0F3-0968505DC874}"
+          DTS:DTSID="{CB7D2823-9D28-451F-B9EC-FDE4DFD345BA}"
           DTS:From="Package\Migrate To New Table\Migrate To New Table -1"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint_Migrate To New Table -1_To_Migrate To New Table 0"
@@ -10542,7 +10635,7 @@
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Migrate To New Table.PrecedenceConstraints[Constraint_Migrate To New Table -2_To_Migrate To New Table -1]"
           DTS:CreationName=""
-          DTS:DTSID="{92F1BBD1-DBB0-4A26-B00F-4CD0E35B655F}"
+          DTS:DTSID="{D26A2EBA-48BE-416E-9516-0B69322235C5}"
           DTS:From="Package\Migrate To New Table\Migrate To New Table -2"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint_Migrate To New Table -2_To_Migrate To New Table -1"
@@ -10550,7 +10643,7 @@
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Migrate To New Table.PrecedenceConstraints[Constraint_Migrate To New Table 0_To_Migrate To New Table 1]"
           DTS:CreationName=""
-          DTS:DTSID="{836CBDA4-D2A5-412D-B720-F2AAC707DCE0}"
+          DTS:DTSID="{7F5D09F0-91F1-44E5-8E0D-6EE646FAD6D3}"
           DTS:From="Package\Migrate To New Table\Migrate To New Table 0"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint_Migrate To New Table 0_To_Migrate To New Table 1"
@@ -10558,7 +10651,7 @@
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Migrate To New Table.PrecedenceConstraints[Constraint_Migrate To New Table 1_To_Migrate To New Table 2]"
           DTS:CreationName=""
-          DTS:DTSID="{28FBDD4B-B72F-45D4-A636-4219B4FE699B}"
+          DTS:DTSID="{A25A07F2-6BEE-4BE2-8ABC-C68EF0F2DCE8}"
           DTS:From="Package\Migrate To New Table\Migrate To New Table 1"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint_Migrate To New Table 1_To_Migrate To New Table 2"
@@ -10571,7 +10664,7 @@
 <!--If you manually edit this section and make a mistake, you can delete it. -->
 <!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
 <Objects
-  Version="sql12">
+  Version="8">
   <!--Each node below will contain properties that do not affect runtime behavior.-->
   <Package
     design-time-name="Package">
@@ -10581,26 +10674,30 @@
         <NodeLayout
           Size="178,42"
           Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCurrency"
-          TopLeft="8.5,5.5" />
+          TopLeft="14,5.5" />
         <NodeLayout
           Size="181,42"
           Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCustomer"
-          TopLeft="7.00000000000001,107.5" />
+          TopLeft="12.5,107.5" />
         <NodeLayout
           Size="158,42"
           Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimDate"
-          TopLeft="18.5,209.5" />
+          TopLeft="24,209.5" />
         <NodeLayout
           Size="172,42"
           Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimProduct"
-          TopLeft="11.5,311.5" />
+          TopLeft="17,311.5" />
         <NodeLayout
           Size="184,42"
           Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimPromotion"
-          TopLeft="5.50000000000004,413.5" />
+          TopLeft="11.0000000000001,413.5" />
+        <NodeLayout
+          Size="195,42"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason"
+          TopLeft="5.50000000000006,515.5" />
         <EdgeLayout
           Id="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimCurrency_To_Migrate DimCustomer]"
-          TopLeft="97.5,47.5">
+          TopLeft="103,47.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -10622,7 +10719,7 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimCustomer_To_Migrate DimDate]"
-          TopLeft="97.5,149.5">
+          TopLeft="103,149.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -10644,7 +10741,7 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimDate_To_Migrate DimProduct]"
-          TopLeft="97.5,251.5">
+          TopLeft="103,251.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -10666,7 +10763,29 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimProduct_To_Migrate DimPromotion]"
-          TopLeft="97.5,353.5">
+          TopLeft="103,353.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 0.PrecedenceConstraints[Constraint_Migrate DimPromotion_To_Migrate DimSalesReason]"
+          TopLeft="103,455.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -10689,24 +10808,20 @@
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="195,510.5"
-          Size="195,553.5"
+          PanelSize="206,612.5"
+          Size="206,655.5"
           Id="Package\Migrate To New Table\Migrate To New Table 0"
-          TopLeft="30.5000000000001,620.5" />
-        <NodeLayout
-          Size="195,42"
-          Id="Package\Migrate To New Table\Migrate To New Table 1\Migrate DimSalesReason"
-          TopLeft="15,5.5" />
+          TopLeft="25.0000000000001,620.5" />
         <NodeLayout
           Size="199.5,42"
           Id="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactInternetSales"
-          TopLeft="12.75,107.5" />
+          TopLeft="12.75,5.5" />
         <NodeLayout
           Size="214,42"
           Id="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactSurveyResponse"
-          TopLeft="5.50000000000003,209.5" />
+          TopLeft="5.50000000000001,107.5" />
         <EdgeLayout
-          Id="Package\Migrate To New Table\Migrate To New Table 1.PrecedenceConstraints[Constraint_Migrate DimSalesReason_To_Migrate FactInternetSales]"
+          Id="Package\Migrate To New Table\Migrate To New Table 1.PrecedenceConstraints[Constraint_Migrate FactInternetSales_To_Migrate FactSurveyResponse]"
           TopLeft="112.5,47.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -10727,35 +10842,13 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Migrate To New Table\Migrate To New Table 1.PrecedenceConstraints[Constraint_Migrate FactInternetSales_To_Migrate FactSurveyResponse]"
-          TopLeft="112.5,149.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="225,306.5"
-          Size="225,349.5"
+          PanelSize="225,204.5"
+          Size="225,247.5"
           Id="Package\Migrate To New Table\Migrate To New Table 1"
-          TopLeft="15.5000000000002,1234" />
+          TopLeft="15.5000000000002,1336" />
         <NodeLayout
           Size="187,42"
           Id="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimGeography"
@@ -10887,7 +10980,7 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Migrate To New Table.PrecedenceConstraints[Constraint_Migrate To New Table 0_To_Migrate To New Table 1]"
-          TopLeft="128,1174">
+          TopLeft="128,1276">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -10940,66 +11033,780 @@
     </LayoutInfo>
   </Package>
   <TaskHost
-    design-time-name="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimProductCategory">
+    design-time-name="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCurrency">
     <LayoutInfo>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="127.5,42"
-          Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimProductCategory\New Node"
-          TopLeft="5.50000000000003,209.5" />
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCurrency\Lookup"
+          TopLeft="NaN,NaN" />
         <NodeLayout
-          Size="113,42"
-          Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimProductCategory\Lookup"
-          TopLeft="12.75,107.5" />
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCurrency\Old Node"
+          TopLeft="NaN,NaN" />
         <NodeLayout
-          Size="122.5,42"
-          Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimProductCategory\Old Node"
-          TopLeft="8.00000000000001,5.5" />
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCurrency\New Node"
+          TopLeft="NaN,NaN" />
         <EdgeLayout
-          Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimProductCategory.Paths[Lookup_NoMatch_New Node]"
-          TopLeft="69.25,149.5">
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCurrency.Paths[Lookup_NoMatch_New Node]"
+          TopLeft="NaN,NaN">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,60"
+              EndConnector="{assembly:Null}"
               Start="0,0"
-              End="0,52.5">
+              End="0,0">
               <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
+                <assembly:Null />
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-19.61193359375,21.37548828125,39.2238671875,9.7490234375"
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCurrency.Paths[Old Node_Output_Lookup]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCustomer">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCustomer\Lookup"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCustomer\Old Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCustomer\New Node"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCustomer.Paths[Old Node_Output_Lookup]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimCustomer.Paths[Lookup_NoMatch_New Node]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimDate">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimDate\New Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimDate\Lookup"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimDate\Old Node"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimDate.Paths[Lookup_NoMatch_New Node]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimDate.Paths[Old Node_Output_Lookup]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimProduct">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimProduct\Lookup"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimProduct\Old Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimProduct\New Node"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimProduct.Paths[Old Node_Output_Lookup]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimProduct.Paths[Lookup_NoMatch_New Node]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimPromotion">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimPromotion\New Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimPromotion\Lookup"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimPromotion\Old Node"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimPromotion.Paths[Lookup_NoMatch_New Node]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimPromotion.Paths[Old Node_Output_Lookup]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\New Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Old Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason\Lookup"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason.Paths[Lookup_NoMatch_New Node]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 0\Migrate DimSalesReason.Paths[Old Node_Output_Lookup]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactInternetSales">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactInternetSales\Lookup"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactInternetSales\Old Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactInternetSales\New Node"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactInternetSales.Paths[Lookup_NoMatch_New Node]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactInternetSales.Paths[Old Node_Output_Lookup]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactSurveyResponse">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactSurveyResponse\Lookup"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactSurveyResponse\Old Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactSurveyResponse\New Node"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactSurveyResponse.Paths[Old Node_Output_Lookup]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 1\Migrate FactSurveyResponse.Paths[Lookup_NoMatch_New Node]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimGeography">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimGeography\New Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimGeography\Old Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimGeography\Lookup"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimGeography.Paths[Lookup_NoMatch_New Node]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimGeography.Paths[Old Node_Output_Lookup]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimProductSubcategory">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimProductSubcategory\New Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimProductSubcategory\Old Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimProductSubcategory\Lookup"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimProductSubcategory.Paths[Lookup_NoMatch_New Node]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table -1\Migrate DimProductSubcategory.Paths[Old Node_Output_Lookup]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Migrate To New Table\Migrate To New Table 2\Migrate FactInternetSalesReason">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 2\Migrate FactInternetSalesReason\New Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 2\Migrate FactInternetSalesReason\Lookup"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table 2\Migrate FactInternetSalesReason\Old Node"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 2\Migrate FactInternetSalesReason.Paths[Lookup_NoMatch_New Node]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table 2\Migrate FactInternetSalesReason.Paths[Old Node_Output_Lookup]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimProductCategory">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimProductCategory\New Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimProductCategory\Lookup"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimProductCategory\Old Node"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimProductCategory.Paths[Lookup_NoMatch_New Node]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimProductCategory.Paths[Old Node_Output_Lookup]"
-          TopLeft="69.25,47.5">
+          TopLeft="NaN,NaN">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,60"
+              EndConnector="{assembly:Null}"
               Start="0,0"
-              End="0,52.5">
+              End="0,0">
               <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
+                <assembly:Null />
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimSalesTerritory">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimSalesTerritory\New Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimSalesTerritory\Old Node"
+          TopLeft="NaN,NaN" />
+        <NodeLayout
+          Size="NaN,NaN"
+          Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimSalesTerritory\Lookup"
+          TopLeft="NaN,NaN" />
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimSalesTerritory.Paths[Lookup_NoMatch_New Node]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate To New Table\Migrate To New Table -2\Migrate DimSalesTerritory.Paths[Old Node_Output_Lookup]"
+          TopLeft="NaN,NaN">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="{assembly:Null}"
+              Start="0,0"
+              End="0,0">
+              <mssgle:Curve.Segments>
+                <assembly:Null />
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
