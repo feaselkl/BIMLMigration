@@ -86,7 +86,7 @@ To do this, we need to copy data from all tables which relate somehow to dbo.Dim
 
 ---
 
-<img src="adventureworksdwdiagram.png" height="974" width="967" />
+<img src="presentation/assets/image/adventureworksdwdiagram.png" height="653" width="648" />
 
 ---?image=presentation/assets/background/problem.jpg&size=cover&opacity=20
 
@@ -200,7 +200,7 @@ BimlStudio is a fully-featured IDE with much more functionality than BimlExpress
 
 This is a paid product which offers a lot more than BimlExpress.  It integrates well with Analysis Services, allows you to reverse engineer packages, and makes Biml development much easier.
 
----?image=presentation/assets/background/white-wall.jpg&size=cover&opacity=50
+---?image=presentation/assets/background/white-wall.jpg&size=cover&opacity=75
 
 ![BimlOnline](presentation/assets/image/bimlonline-beta.svg)
 
@@ -236,7 +236,7 @@ BI Developer Extensions is available in the Visual Studio Gallery.
 5. Write the Biml Code
 6. Maintain the Biml Code
 
----?image=presentation/assets/background/space.jpg&size=cover&opacity=20
+---?image=presentation/assets/background/space.jpg&size=cover&opacity=50
 
 ### Build Supporting Metadata
 
@@ -316,8 +316,6 @@ Biml is just XML.  It all starts with a Biml tag:
 
 ---
 
-### Packages and Projects
-
 ```xml
 <Biml xmlns="http://schemas.varigence.com/biml.xsd">
     <Projects>
@@ -345,8 +343,6 @@ Biml is just XML.  It all starts with a Biml tag:
 @[13-15](Define the packages we will build out.)
 
 ---
-
-### Packages and Projects
 
 ```xml
 <Packages>
