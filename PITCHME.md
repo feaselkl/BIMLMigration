@@ -4,7 +4,7 @@
 
 ## Client Migration with Biml
 
-<a href="http://www.catallaxyservices.com">Kevin Feasel</a> (<a href="https://twitter.com/feaselkl">@feaselkl</a>)
+<a href="http://www.catallaxyservices.com">Kevin Feasel</a> (<a href="https://twitter.com/feaselkl">@feaselkl</a>)<br />
 <a href="http://csmore.info/on/biml">http://CSmore.info/on/biml</a>
 
 ---
@@ -36,13 +36,13 @@
 </div>
 @snapend
 
----
+---?image=presentation/assets/background/garden-sign.jpg&size=cover&opacity=20
 
 ### What Is Biml?
 
 Biml is the Business Intelligence Markup Language. It is an XML-based language used to design SQL Server Analysis Services and SQL Server Integration Services solutions.
 
----
+---?image=presentation/assets/background/water-rocks.jpg&size=cover&opacity=20
 
 ### Why Use Biml?
 
@@ -76,7 +76,7 @@ My goals today:
 5. Write the Biml Code
 6. Maintain the Biml Code
 
----
+---?image=presentation/assets/background/bicycle.jpg&size=cover&opacity=20
 
 ### Understand the Problem
 
@@ -86,9 +86,9 @@ To do this, we need to copy data from all tables which relate somehow to dbo.Dim
 
 ---
 
-![AdventureWorksDW Table Diagram](presentation/assets/image/adventureworksdwdiagram.png)
+<img src="adventureworksdwdiagram.png" height="974" width="967" />
 
----
+---?image=presentation/assets/background/problem.jpg&size=cover&opacity=20
 
 ### Understand the Problem
 
@@ -112,7 +112,7 @@ Write an SSIS package to move this data.  Considerations:
 5. Write the Biml Code
 6. Maintain the Biml Code
 
----
+---?image=presentation/assets/background/table-with-chalkboard.jpg&size=cover&opacity=20
 
 ### The Ideal Package
 
@@ -120,39 +120,39 @@ The first step in automation:  know the task.
 
 Building a sample SSIS package, we know we will need:
 
----
+---?image=presentation/assets/background/brown-package.jpg&size=cover&opacity=50
 
 ![Source and Destination Connections](presentation/assets/image/IP1_Connections.png)
 
----
+---?image=presentation/assets/background/brown-package.jpg&size=cover&opacity=50
 
 ![Expressions and Variables](presentation/assets/image/IP2_Expressions.png)
 
----
+---?image=presentation/assets/background/brown-package.jpg&size=cover&opacity=50
 
 ![A container to delete old data](presentation/assets/image/IP3_DeleteContainer.png)
 
----
+---?image=presentation/assets/background/brown-package.jpg&size=cover&opacity=50
 
 ![A SQL task to delete old data](presentation/assets/image/IP4_DeleteOperation.png)
 
----
+---?image=presentation/assets/background/brown-package.jpg&size=cover&opacity=50
 
 ![A container to migrate data from one server to another](presentation/assets/image/IP5_MigrateContainer.png)
 
----
+---?image=presentation/assets/background/brown-package.jpg&size=cover&opacity=50
 
 ![A migration data flow](presentation/assets/image/IP6_MigrationDataFlow.png)
 
----
+---?image=presentation/assets/background/brown-package.jpg&size=cover&opacity=50
 
 ![Source data](presentation/assets/image/IP7_Source.png)
 
----
+---?image=presentation/assets/background/brown-package.jpg&size=cover&opacity=50
 
 ![Destination data](presentation/assets/image/IP8_Destination.png)
 
----
+---?image=presentation/assets/background/blue-package.jpg&size=cover&opacity=20
 
 ### The Ideal Package
 
@@ -172,7 +172,7 @@ This stub package does not need to be perfect--in fact, we will make considerabl
 5. Write the Biml Code
 6. Maintain the Biml Code
 
----
+---?image=presentation/assets/background/hardware.jpg&size=cover&opacity=20
 
 ### Available Tooling
 
@@ -180,7 +180,7 @@ This stub package does not need to be perfect--in fact, we will make considerabl
 
 Varigance, the company behind Biml, has several tools available to help with Biml development.  Get these products at <a href="https://www.varigence.com/">their company website</a>.
 
----
+---?image=presentation/assets/background/welder.jpg&size=cover&opacity=20
 
 ![BimlExpress](presentation/assets/image/bimlexpress-white.svg)
 
@@ -192,7 +192,7 @@ Biml Express is updated occasionally, though support for Visual Studio 2017 did 
 
 ![BimlExpress in action](presentation/assets/image/BimlExpress.png)
 
----
+---?image=presentation/assets/background/welder-metal.jpg&size=cover&opacity=20
 
 ![BimlStudio](presentation/assets/image/bimlstudio-white.svg)
 
@@ -200,19 +200,19 @@ BimlStudio is a fully-featured IDE with much more functionality than BimlExpress
 
 This is a paid product which offers a lot more than BimlExpress.  It integrates well with Analysis Services, allows you to reverse engineer packages, and makes Biml development much easier.
 
----
+---?image=presentation/assets/background/white-wall.jpg&size=cover&opacity=50
 
 ![BimlOnline](presentation/assets/image/bimlonline-beta.svg)
 
-BimlOnline is a beta product intended to build packages without needing to install Visual Studio at all.  Its key benefit is that it can reverse engineer an Integration Services package back into Biml.
+@color[#00416a](BimlOnline is a beta product intended to build packages without needing to install Visual Studio at all.  Its key benefit is that it can reverse engineer an Integration Services package back into Biml.)
 
-During the beta period, this product is free.  After it leaves beta, there will be a price associated with it.
+@color[#00416a](During the beta period, this product is free.  After it leaves beta, there will be a price associated with it.)
 
----
+---?image=presentation/assets/background/flexible.jpg&size=cover&opacity=20
 
-![BimlStudio](presentation/assets/image/bimlflex.svg)
+![BimlStudio](presentation/assets/image/bimlflex-white.svg)
 
-BimlFlex allows you to build solutions using metadata and templates, without writing code.  This is also a paid product and can be quite expensive.
+BimlFlex allows you to build solutions using metadata and templates, without writing code.  This is also a paid product and can be quite expensive, but can help with rapid warehouse development.
 
 ---
 
@@ -236,13 +236,13 @@ BI Developer Extensions is available in the Visual Studio Gallery.
 5. Write the Biml Code
 6. Maintain the Biml Code
 
----
+---?image=presentation/assets/background/space.jpg&size=cover&opacity=20
 
 ### Build Supporting Metadata
 
 We could write Biml using hard-coded table names and hand-crafted copy-paste code, but that's not very efficient at all.  Let's create a metadata table to store everything we'll need for later.
 
----
+---?image=presentation/assets/background/ceiling.jpg&size=cover&opacity=20
 
 ### Metadata Requirements
 
@@ -281,7 +281,7 @@ GO
 @[7](Join details to get from DimCustomer to our table.)
 @[9](Where clause to filter out our customer.)
 
----
+---?image=presentation/assets/background/dictionary.jpg&size=cover&opacity=20
 
 ### Generating Migration Data
 
@@ -307,7 +307,7 @@ For a small number of tables, you can easily generate migration data by hand.  T
 
 ### My First Biml
 
-Biml is just ML.  It all starts with a Biml tag:
+Biml is just XML.  It all starts with a Biml tag:
 
 ```xml
 <Biml xmlns="http://schemas.varigence.com/biml.xsd">
@@ -318,15 +318,18 @@ Biml is just ML.  It all starts with a Biml tag:
 
 ### Packages and Projects
 
-We can easily create packages and projects with Biml.
-
 ```xml
 <Biml xmlns="http://schemas.varigence.com/biml.xsd">
     <Projects>
-        <PackageProject Name="BIMLMigration" ProtectionLevel="DontSaveSensitive">
+        <PackageProject Name="BIMLMigration"
+			ProtectionLevel="DontSaveSensitive">
             <Parameters>
-                <Parameter Name="OldWarehouseServer" DataType="String">.</Parameter>
-                <Parameter Name="OldWarehouseDatabase" DataType="String">AdventureWorksDW2014</Parameter>
+                <Parameter Name="OldWarehouseServer"
+					DataType="String">.
+				</Parameter>
+                <Parameter Name="OldWarehouseDatabase" 
+					DataType="String">AdventureWorksDW2014
+				</Parameter>
             </Parameters>
             <Packages>
                 <Package PackageName="MigrateCustomer" />
@@ -336,45 +339,49 @@ We can easily create packages and projects with Biml.
 </Biml>
 ```
 
-@[2-12](Create a new project.)
-@[3](Specify the project name and protection level.)
-@[4-7](Define the parameters we need. This is just a sample.)
-@[8-10](Define the packages we will build out.)
+@[2-17](Create a new project.)
+@[3-4](Specify the project name and protection level.)
+@[5-12](Define the parameters we need. This is just a sample.)
+@[13-15](Define the packages we will build out.)
 
 ---
 
 ### Packages and Projects
 
-We can easily create packages and projects with Biml.
-
 ```xml
 <Packages>
-	<Package Name="MigrateCustomer" ConstraintMode="Linear" ProtectionLevel="DontSaveSensitive">
+	<Package Name="MigrateCustomer" ConstraintMode="Linear"
+		ProtectionLevel="DontSaveSensitive">
 		<Connections>
 			<Connection ConnectionName="OldWarehouseNode">
 				<Expressions>
-					<Expression ExternalProperty="InitialCatalog">@[$Project::OldWarehouseDatabase]</Expression>
-					<Expression ExternalProperty="ServerName">@[$Project::OldWarehouseServer]</Expression>
+					<Expression ExternalProperty="InitialCatalog">
+						@[$Project::OldWarehouseDatabase]
+					</Expression>
+					<Expression ExternalProperty="ServerName">
+						@[$Project::OldWarehouseServer]
+					</Expression>
 				</Expressions>
 			</Connection>
 		</Connections>
 		<Variables>
-		    <Variable DataType="Int32" Name="CustomerID">12195</Variable>
+		    <Variable DataType="Int32"
+				Name="CustomerID">12195</Variable>
 		</Variables>
 	    <Tasks>
-	        <!-- TODO:  fill out details -->
+	        <!-- Fill out details -->
 	    </Tasks>
     </Package>
 </Packages>
 ```
 
 @[2](Create a new package called MigrateCustomer.dtsx.)
-@[3-10](Create a new connection.)
-@[5-8](Use the project parameter to override default values.)
-@[11-13](Define any variables we will need.)
-@[14-16](Build out the control flow for each package.)
+@[4-15](Create a new connection.)
+@[6-13](Use the project parameter to override default values.)
+@[16-19](Define any variables we will need.)
+@[20-22](Build out the control flow for each package.)
 
----
+---?image=presentation/assets/background/connections.jpg&size=cover&opacity=20
 
 ### Connections
 
@@ -398,7 +405,7 @@ We can define connections in a separate file to make them easier to find.  Biml 
 @[7](Connecting to our metadata repository.)
 @[10](Templating lets us order our files.)
 
----
+---?image=presentation/assets/background/levels.jpg&size=cover&opacity=20
 
 ### Templates
 
@@ -413,7 +420,8 @@ In our code, connections is tier 1 and the project/package file is tier 2.
 A simplified form of the package:
 
 ```xml
-<Package Name="MigrateCustomer" ConstraintMode="Linear" ProtectionLevel="DontSaveSensitive">
+<Package Name="MigrateCustomer" ConstraintMode="Linear"
+	ProtectionLevel="DontSaveSensitive">
     <Tasks>
         <#*=CallBimlScript("cbs-DeleteAndLoad.biml") *#>
         <#=CallBimlScript("cbs-LookupLoad.biml") #>
@@ -421,10 +429,10 @@ A simplified form of the package:
 </Package>
 ```
 
-@[3](In Biml, the asterisk comments out calls.)
-@[4](Call a separate Biml file.)
+@[4](In Biml, the asterisk comments out calls.)
+@[5](Call a separate Biml file.)
 
----
+---?image=presentation/assets/background/telephones.jpg&size=cover&opacity=20
 
 ### CallBimlScript
 
@@ -448,7 +456,7 @@ Let's take a look at the code.
 5. Write the Biml Code
 6. **Maintain the Biml Code**
 
----
+---?image=presentation/assets/background/engineering.jpg&size=cover&opacity=20
 
 ### Metadata Maintenance
 
@@ -456,7 +464,7 @@ As tables change, we should keep the metadata we created up to date.
 
 To support table changes, we just need to re-generate the packages from the Biml script we created.  No additional changes are necessary.
 
----
+---?image=presentation/assets/background/blue-package.jpg&size=cover&opacity=20
 
 ### Package Changes
 
@@ -466,7 +474,7 @@ As the Biml scripts change, we just need to re-generate packages from the script
 
 Treat the packages as binaries and Biml as source code.
 
----
+---?image=presentation/assets/background/newspapers.jpg&size=cover&opacity=20
 
 ### Source Control
 
@@ -479,6 +487,8 @@ An advantage to Biml over raw SSIS packages is that you can perform meaningful d
 ### Wrapping Up
 
 Biml is a powerful language.  We've seen one use case in which Biml saved dozens of hours of development and maintenance time.
+
+With small tweaks, I've implemented this several times in different guises.
 
 ---
 
