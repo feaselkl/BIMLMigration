@@ -66,6 +66,34 @@ My goals today:
 
 ---
 
+![Adding a script task is easy.](presentation/assets/image/SSIS1_GrabScriptTask.png)
+
+---
+
+![Then you name it.](presentation/assets/image/SSIS2_NameScriptTask.png)
+
+---
+
+![Then you link it.](presentation/assets/image/SSIS3_Link.png)
+
+---
+
+![Then you add variables.](presentation/assets/image/SSIS4_Variables.png)
+
+---
+
+![Then you type in code.](presentation/assets/image/SSIS5_AddCode.png)
+
+---
+
+![Then you do it again and again and again all day long.](presentation/assets/image/SSIS6_Repeat.png)
+
+---
+
+![Running for president in 2020.](presentation/assets/image/MakeETLCodeAgain.png)
+
+---
+
 @title[Understand the Problem]
 
 ## Agenda
