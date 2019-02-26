@@ -172,14 +172,14 @@
             </SSIS:PackageMetaData>
             <SSIS:PackageMetaData SSIS:Name="MigrateCustomer.dtsx">
               <SSIS:Properties>
-                <SSIS:Property SSIS:Name="ID">{404CCCE6-D123-406C-95E4-1488395C9CBC}</SSIS:Property>
+                <SSIS:Property SSIS:Name="ID">{4EE957E5-F5EF-4C0F-A2AA-9C8B5435DB02}</SSIS:Property>
                 <SSIS:Property SSIS:Name="Name">MigrateCustomer</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{5AD54D4E-1FD7-48E1-BA6F-F9FA010C944E}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{F5C32B97-3411-4501-9F53-80B6599D578E}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>

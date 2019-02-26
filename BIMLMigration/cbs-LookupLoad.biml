@@ -47,7 +47,7 @@
                                 <Outputs></Outputs>
                             </Lookup>
                             <# } #>
-                            <OleDbDestination Name="New Node" ConnectionName="NewWarehouseNode" BatchSize="10000" KeepIdentity=<# if(!m.NeedToDelete) { #> "true" <# } else { #> "false" <# } #> UseFastLoadIfAvailable="true" MaximumInsertCommitSize="2000000">
+                            <OleDbDestination Name="New Node" ConnectionName="NewWarehouseNode" BatchSize="2000000" KeepIdentity=<# if(!m.NeedToDelete) { #> "true" <# } else { #> "false" <# } #> UseFastLoadIfAvailable="true" MaximumInsertCommitSize="10000">
                             <# if(!m.NeedToDelete) {#>
                                 <InputPath OutputPathName="Lookup.NoMatch"></InputPath>
                             <# } #>
