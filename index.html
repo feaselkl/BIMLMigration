@@ -1,0 +1,569 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Catallaxy Services | Client Migration with Biml</title>
+
+		<link rel="stylesheet" href="../reveal.js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal.js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme">
+		<link rel="stylesheet" href="../WebsiteAssets/mods.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../reveal.js/plugin/highlight/monokai.css" id="highlight-theme">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h2>Client Migration with Biml</h2>
+					
+					<a href="https://www.catallaxyservices.com">Kevin Feasel</a> (<a href="https://twitter.com/feaselkl">@feaselkl</a>)<br />
+					<a href="http://CSmore.info/on/biml">http://CSmore.info/on/biml</a>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Who Am I?  What Am I Doing Here?</h3>
+					<div class="container">
+						<div class="col">
+							<table class="whoami">
+								<tr>
+									<td><a href="https://csmore.info"><img src="../WebsiteAssets/Logo.png" height="100" /></a></td>
+									<td nowrap><a href="https://csmore.info">Catallaxy Services</a></td>
+								</tr>
+								<tr>
+									<td><a href="https://curatedsql.com"><img src="../WebsiteAssets/CuratedSQLLogo.png" height="100" /></a></td>
+									<td nowrap><a href="https://curatedsql.com">Curated SQL</a></td>
+								</tr>
+								<tr>
+									<td><a href="https://www.apress.com/us/book/9781484254608"><img src="../WebsiteAssets/PolyBaseRevealed.png" height="120" /></a></td>
+									<td nowrap><a href="https://www.apress.com/us/book/9781484254608">PolyBase Revealed</a></td>
+								</tr>
+							</table>
+						</div>
+						<div class="col">
+							<a href="http://www.twitter.com/feaselkl"><img src="../WebsiteAssets/HeadShot.jpg" height="358" width="315" /></a>
+							<br />
+							<a href="http://www.twitter.com/feaselkl">@feaselkl</a>
+						</div>					
+					</div>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/garden-sign.jpg" data-background-opacity="0.2">
+					<h3>What is Biml?</h3>
+					
+					<p>Biml is the Business Intelligence Markup Language. It is an XML-based language used to design SQL Server Analysis Services and SQL Server Integration Services solutions.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/water-rocks.jpg" data-background-opacity="0.2">
+					<h3>Why Use Biml?</h3>
+					
+					<p>Biml offers several advantages over native Integration Services package creation:</p>
+					
+					<ul>
+						<li>Biml XML is shorter and more concise.</li>
+						<li>Biml offers templating options using .NET, letting you generalize logic and script multiple, complex SSIS packages with the help of metadata.</li>
+						<li>Biml strips out presentation metadata, making it easier to compare in source control.</li>
+					</ul>
+
+					<p>Biml is a force multiplier for ETL professionals.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/motivation.jpg" data-background-opacity="0.2">
+					<h3>Motivation</h3>
+					
+					<p>My goals in this talk:</p>
+					
+					<ul>
+						<li>Build package(s) to migrate customer data from one database to another.</li>
+						<li>Minimize the time I spend clicking, dragging, modifying, building, testing, and editing SSIS packages.</li>
+						<li>Create a solution which handles table evolution over time.</li>
+					</ul>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<img src="presentation/assets/image/SSIS1_GrabScriptTask.png" alt="Adding a script task is easy." />
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<img src="presentation/assets/image/SSIS2_NameScriptTask.png" alt="Then you name it." />
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<img src="presentation/assets/image/SSIS3_Link.png" alt="Then you link it." />
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<img src="presentation/assets/image/SSIS4_Variables.png" alt="Then you add variables." />
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<img src="presentation/assets/image/SSIS5_AddCode.png" alt="Then you type in code." />
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<img src="presentation/assets/image/SSIS6_Repeat.png" alt="Then you do it again and again and again all day long." />
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li class="active">Understand the Problem</li>
+						<li>Solving by Hand -- Package Walkthrough</li>
+						<li>Review Available Tools</li>
+						<li>Build Supporting Metadata</li>
+						<li>Write the Biml Code</li>
+						<li>Maintain the Biml Code</li>
+					</ol>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/bicycle.jpg" data-background-opacity="0.2">
+					<h3>Understand the Problem</h3>
+					
+					<p>We have customer-specific data in the Adventure Works DW database, and we want to migrate this over to a new copy of the database.</p>
+
+					<p>To do this, we need to copy data from all tables which relate somehow to dbo.DimCustomer.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<img src="presentation/assets/image/adventureworksdwdiagram.png" height="653" width="648" />
+				</section>
+				
+				<section data-background-image="presentation/assets/background/problem.jpg" data-background-opacity="0.2">
+					<h3>Understand the Problem</h3>
+					
+					<p>Write an SSIS package to move this data.  Considerations:</p>
+
+					<ul>
+						<li>Foreign key constraints imply precedence</li>
+						<li>Getting only relevant data</li>
+						<li>Handling existing data in new database</li>
+						<li>Can we safely re-run the package?</li>
+						<li>Will customers enter data during migration?</li>
+					</ul>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li>Understand the Problem</li>
+						<li class="active">Solving by Hand -- Package Walkthrough</li>
+						<li>Review Available Tools</li>
+						<li>Build Supporting Metadata</li>
+						<li>Write the Biml Code</li>
+						<li>Maintain the Biml Code</li>
+					</ol>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/table-with-chalkboard.jpg" data-background-opacity="0.2">
+					<h3>The Ideal Package</h3>
+					
+					<p>The first step in automation:  know the task.</p>
+
+					<p>Building a sample SSIS package, we know we will need:</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/brown-package.jpg" data-background-opacity="0.2">
+					<img src="presentation/assets/image/IP1_Connections.png" alt="Source and Destination Connections" />
+				</section>
+				
+				<section data-background-image="presentation/assets/background/brown-package.jpg" data-background-opacity="0.2">
+					<img src="presentation/assets/image/IP2_Expressions.png" alt="Expressions and Variables" />
+				</section>
+				
+				<section data-background-image="presentation/assets/background/brown-package.jpg" data-background-opacity="0.2">
+					<img src="presentation/assets/image/IP3_DeleteContainer.png" alt="A container to delete old data" />
+				</section>
+				
+				<section data-background-image="presentation/assets/background/brown-package.jpg" data-background-opacity="0.2">
+					<img src="presentation/assets/image/IP4_DeleteOperation.png" alt="A SQL task to delete old data" />
+				</section>
+				
+				<section data-background-image="presentation/assets/background/brown-package.jpg" data-background-opacity="0.2">
+					<img src="presentation/assets/image/IP5_MigrateContainer.png" alt="A container to migrate data from one server to another" />
+				</section>
+				
+				<section data-background-image="presentation/assets/background/brown-package.jpg" data-background-opacity="0.2">
+					<img src="presentation/assets/image/IP6_MigrationDataFlow.png" alt="A migration data flow" />
+				</section>
+				
+				<section data-background-image="presentation/assets/background/brown-package.jpg" data-background-opacity="0.2">
+					<img src="presentation/assets/image/IP7_Source.png" alt="Source data" />
+				</section>
+				
+				<section data-background-image="presentation/assets/background/brown-package.jpg" data-background-opacity="0.2">
+					<img src="presentation/assets/image/IP8_Destination.png" alt="Destination data" />
+				</section>
+				
+				<section data-background-image="presentation/assets/background/blue-package.jpg" data-background-opacity="0.2">
+					<h3>The Ideal Package</h3>
+					
+					<p>The ideal package gives us an idea of what we need to accomplish, as well as important package optimizations we will need.</p>
+
+					<p>This stub package does not need to be perfect--in fact, we will make considerable changes as we go along.  But it's easier to start when you have an end in mind.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li>Understand the Problem</li>
+						<li>Solving by Hand -- Package Walkthrough</li>
+						<li class="active">Review Available Tools</li>
+						<li>Build Supporting Metadata</li>
+						<li>Write the Biml Code</li>
+						<li>Maintain the Biml Code</li>
+					</ol>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/hardware.jpg" data-background-opacity="0.2">
+					<h3>Available Tooling</h3>
+					
+					<img src="presentation/assets/image/varigence-icon.png" />
+					
+					<p>Varigance, the company behind Biml, has several tools available to help with Biml development.  Get these products at <a href="https://www.varigence.com/">their company website</a>.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/welder.jpg" data-background-opacity="0.2">
+					<h3>Available Tooling</h3>
+					
+					<img src="presentation/assets/image/bimlexpress-white.svg" />
+					
+					<p>Biml Express is a free extension for Visual Studio.  It currently supports Visual Studio versions up to 2019.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<img src="presentation/assets/image/BimlExpress.png" />
+				</section>
+				
+				<section data-background-image="presentation/assets/background/welder-metal.jpg" data-background-opacity="0.2">
+					<img src="presentation/assets/image/bimlstudio-white.svg" />
+					
+					<p>BimlStudio is a fully-featured IDE with much more functionality than BimlExpress.</p>
+
+					<p>This is a paid product which offers a lot more than BimlExpress.  It integrates well with Analysis Services, allows you to reverse engineer packages, and makes Biml development much easier.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/white-wall.jpg" data-background-opacity="0.6">
+					<img src="presentation/assets/image/bimlonline-beta.svg" />
+					
+					<p>BimlOnline is a beta product intended to build packages without needing to install Visual Studio at all.  Its key benefit is that it can reverse engineer an Integration Services package back into Biml.</p>
+
+					<p>During the beta period, this product is free.  After it leaves beta, there will be a price associated with it.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/flexible.jpg" data-background-opacity="0.2">
+					<img src="presentation/assets/image/bimlflex-white.svg" />
+					
+					<p>BimlFlex allows you to build solutions using metadata and templates, without writing code.  This is also a paid product and can be quite expensive, but can help with rapid warehouse development.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/flexible.jpg" data-background-opacity="0.2">
+					<h3>BI Developer Extensions</h3>
+				
+					<img src="presentation/assets/image/bideveloperextensions.gif" />
+					
+					<p>In addition to Varigence products, BI Developer Extensions (formerly BIDS Helper) has the ability to generate packages from Biml.</p>
+
+					<p>BI Developer Extensions is available in the Visual Studio Gallery and on <a href="https://bideveloperextensions.github.io/">GitHub</a>.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li>Understand the Problem</li>
+						<li>Solving by Hand -- Package Walkthrough</li>
+						<li>Review Available Tools</li>
+						<li class="active">Build Supporting Metadata</li>
+						<li>Write the Biml Code</li>
+						<li>Maintain the Biml Code</li>
+					</ol>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/space.jpg" data-background-opacity="0.35">
+					<h3>Build Supporting Metadata</h3>
+					
+					<p>We could write Biml using hard-coded table names and hand-crafted copy-paste code, but that's not very efficient at all.  Let's create a metadata table to store everything we'll need for later.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/ceiling.jpg" data-background-opacity="0.2">
+					<h3>Metadata Requirements</h3>
+					
+					<ul>
+						<li>Object details (schema name, table name, etc.)</li>
+						<li>Foreign keys to determine table load order</li>
+						<li>Table columns and basic select operation for migration</li>
+						<li>Join details to get from DimCustomer to our table</li>
+						<li>Where clause to filter out our customer</li>
+					</ul>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<pre><code data-line-numbers="|4-5|6|8,11-12|7|9" data-trim><script type="text/template">
+					CREATE TABLE [dbo].[MigrationStep]
+					(
+						[MigrationStepID] [int] IDENTITY(1,1) NOT NULL,
+						[SchemaName] [sysname] NOT NULL,
+						[TableName] [sysname] NOT NULL,
+						[Section] [int] NULL,
+						[JoinCriteria] [nvarchar](2000) NULL,
+						[SelectCriteria] [nvarchar](2000) NULL,
+						[WhereCriteria] [nvarchar](100) NULL,
+						[NeedToDelete] [bit] NOT NULL,
+						[LookupColumns] [nvarchar](512) NULL,
+						[LookupColumnXML] [nvarchar](1024) NULL,
+						CONSTRAINT [PK_MigrationStep] PRIMARY KEY CLUSTERED 
+						(
+							[MigrationStepID] ASC
+						)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 100) ON [PRIMARY]
+					) ON [PRIMARY]
+					GO
+					</script></code></pre>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/dictionary.jpg" data-background-opacity="0.2">
+					<h3>Generating Migration Data</h3>
+					
+					<p>For a small number of tables, you can easily generate migration data by hand.  This is a one-time operation.  For a larger number of tables, you might want to script it out.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/demo.jpg" data-background-opacity="0.2">
+					<h3>Demo Time</h3>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li>Understand the Problem</li>
+						<li>Solving by Hand -- Package Walkthrough</li>
+						<li>Review Available Tools</li>
+						<li>Build Supporting Metadata</li>
+						<li class="active">Write the Biml Code</li>
+						<li>Maintain the Biml Code</li>
+					</ol>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>My First Biml</h3>
+					
+					<p>Biml is just XML.  It all starts with a Biml tag:</p>
+				
+					<pre><code data-trim><script type="text/template">
+					<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+					</Biml>
+					</script></code></pre>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<pre><code data-line-numbers="|2-17|3-4|5-12|13-15" data-trim><script type="text/template">
+					<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+						<Projects>
+							<PackageProject Name="BIMLMigration"
+								ProtectionLevel="DontSaveSensitive">
+								<Parameters>
+									<Parameter Name="OldWarehouseServer"
+										DataType="String">.
+									</Parameter>
+									<Parameter Name="OldWarehouseDatabase" 
+										DataType="String">AdventureWorksDW2014
+									</Parameter>
+								</Parameters>
+								<Packages>
+									<Package PackageName="MigrateCustomer" />
+								</Packages>
+							</PackageProject>
+						</Projects>
+					</Biml>
+					</script></code></pre>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<pre><code data-line-numbers="|2|4-15|6-13|16-19|20-22" data-trim><script type="text/template">
+					<Packages>
+						<Package Name="MigrateCustomer" ConstraintMode="Linear"
+							ProtectionLevel="DontSaveSensitive">
+							<Connections>
+								<Connection ConnectionName="OldWarehouseNode">
+									<Expressions>
+										<Expression ExternalProperty="InitialCatalog">
+											@[$Project::OldWarehouseDatabase]
+										</Expression>
+										<Expression ExternalProperty="ServerName">
+											@[$Project::OldWarehouseServer]
+										</Expression>
+									</Expressions>
+								</Connection>
+							</Connections>
+							<Variables>
+								<Variable DataType="Int32"
+									Name="CustomerID">12195</Variable>
+							</Variables>
+							<Tasks>
+								<!-- Fill out details -->
+							</Tasks>
+						</Package>
+					</Packages>
+					</script></code></pre>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/connections.jpg" data-background-opacity="0.2">
+					<h3>Connections</h3>
+					
+					<p>We can define connections in a separate file to make them easier to find.  Biml lets you combine files together after the fact.</p>
+					
+					<pre><code data-line-numbers="|2-8|4-5|7|10" data-trim><script type="text/template">
+					<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+						<Connections>
+							<!-- Connections we will use in our packages -->
+							<Connection Name="OldWarehouseNode" ConnectionString="Data Source=LOCALHOST;Initial Catalog=AdventureWorksDW2014;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+							<Connection Name="NewWarehouseNode" ConnectionString="Data Source=LOCALHOST;Initial Catalog=AdventureWorksDW2014Dest;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+							<!-- Connection we will use to retrieve information to build our packages -->
+							<Connection Name="MetadataConnectionString" ConnectionString="Provider=SQLNCLI11;Server=LOCALHOST;Initial Catalog=AdventureWorksDW2014;Integrated Security=SSPI;" />
+						</Connections>
+					</Biml>
+					<#@ template tier="1" #>
+					</script></code></pre>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/levels.jpg" data-background-opacity="0.2">
+					<h3>Templates</h3>
+					
+					<p>Templates let us group together files into "tiers."  The Biml engine processes tiers in ascending order, so files with <code>tier="1"</code> run before <code>tier="2"</code> and so on.  You do not need to number your tiers sequentially--you might want to leave gaps for future growth.</p>
+
+					<p>In our code, connections is tier 1 and the project/package file is tier 2.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Fleshing Out Our Tasks</h3>
+					
+					<p>A simplified form of the package:</p>
+					
+					<pre><code data-line-numbers="|4|5" data-trim><script type="text/template">
+					<Package Name="MigrateCustomer" ConstraintMode="Linear"
+						ProtectionLevel="DontSaveSensitive">
+						<Tasks>
+							<#*=CallBimlScript("cbs-DeleteAndLoad.biml") *#>
+							<#=CallBimlScript("cbs-LookupLoad.biml") #>
+						</Tasks>
+					</Package>
+					</script></code></pre>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/telephones.jpg" data-background-opacity="0.2">
+					<h3>CallBimlScript</h3>
+					
+					<p>The CallBimlScript function lets us reference a separate Biml file.  Here, we use it to decide between a delete-and-reload strategy and an incremental load approach.  In other places, you can use CallBimlScript to abstract out common functionality.</p>
+
+					<p>Let's take a look at the code.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/demo.jpg" data-background-opacity="0.2">
+					<h3>Demo Time</h3>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li>Understand the Problem</li>
+						<li>Solving by Hand -- Package Walkthrough</li>
+						<li>Review Available Tools</li>
+						<li>Build Supporting Metadata</li>
+						<li>Write the Biml Code</li>
+						<li class="active">Maintain the Biml Code</li>
+					</ol>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/engineering.jpg" data-background-opacity="0.2">
+					<h3>Metadata Maintenance</h3>
+					
+					<p>As tables change, we should keep the metadata we created up to date.</p>
+
+					<p>To support table changes, we just need to re-generate the packages from the Biml script we created.  No additional changes are necessary.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/blue-package.jpg" data-background-opacity="0.2">
+					<h3>Package Changes</h3>
+					
+					<p>If we want to change the package(s) we create, we can modify the Biml directly.</p>
+
+					<p>As the Biml scripts change, we just need to re-generate packages from the scripts.  If you built your Biml correctly, you should not need to modify your packages directly.</p>
+
+					<p>Treat the packages as binaries and Biml as source code.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/newspapers.jpg" data-background-opacity="0.2">
+					<h3>Source Control</h3>
+					
+					<p>You should store your Biml in source control.  With the Biml in source control and a Biml-first approach with no post hoc SSIS package changes, packages do not necessarily need to be checked in.</p>
+
+					<p>An advantage to Biml over raw SSIS packages is that you can perform meaningful diffs against Biml scripts, something you cannot do with SSIS packages.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/wrappingup.jpg" data-background-opacity="0.2">
+					<h3>Wrapping Up</h3>
+					
+					<p>Biml is a powerful language.  We've seen one use case in which Biml saved dozens of hours of development and maintenance time.</p>
+
+					<p>With small tweaks, I've implemented this several times in different guises.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/wrappingup.jpg" data-background-opacity="0.2">
+					<h3>Wrapping Up</h3>
+					
+					<p>
+						To learn more, go here:
+						<br />
+						<a href="https://csmore.info/on/biml">https://CSmore.info/on/biml</a>
+					</p>
+					<br />
+					<p>
+						And for help, contact me:
+						<br />
+						<a href="mailto:feasel@catallaxyservices.com">feasel@catallaxyservices.com</a> | <a href="https://www.twitter.com/feaselkl">@feaselkl</a>
+					</p>
+					<br />
+					<p>
+						Catallaxy Services consulting:
+						<br />
+						<a href="https://csmore.info/contact">https://CSmore.info/on/contact</a>
+					</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal.js/dist/reveal.js"></script>
+		<script src="../reveal.js/plugin/zoom/zoom.js"></script>
+		<script src="../reveal.js/plugin/notes/notes.js"></script>
+		<script src="../reveal.js/plugin/search/search.js"></script>
+		<script src="../reveal.js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal.js/plugin/math/math.js"></script>
+		<script src="../reveal.js/plugin/menu/menu.js"></script>
+		<script src="../reveal.js/plugin/highlight/highlight.js"></script>
+		<script src="../reveal.js/plugin/chart/Chart.min.js"></script>
+		<script src="../reveal.js/plugin/chart/plugin.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				width: '70%',
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				transition: 'fade',
+				
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath, RevealMenu, RevealChart ]
+			});
+		</script>
+	</body>
+</html>
